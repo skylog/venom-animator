@@ -12,7 +12,7 @@ export type EasingName =
 
 export type BlendMode = 'normal' | 'add' | 'multiply' | 'screen';
 
-export type NodeType = 'container' | 'sprite' | 'spritesheet_anim' | 'graphics' | 'text';
+export type NodeType = 'container' | 'sprite' | 'spritesheet_anim' | 'graphics' | 'text' | 'mesh';
 
 // --- Keyframes ---
 
@@ -28,7 +28,9 @@ export type KeyframeProperty =
   | 'rotation' | 'alpha' | 'tint'
   // graphics-specific
   | 'fromX' | 'fromY' | 'toX' | 'toY'
-  | 'radius' | 'width' | 'height';
+  | 'radius' | 'width' | 'height'
+  // mesh-specific (Phase 6) — анимация вершин по индексу: vertex0_x, vertex0_y, ...
+  | `vertex${number}_x` | `vertex${number}_y`;
 
 export type KeyframeMap = Partial<Record<KeyframeProperty, Keyframe[]>>;
 
@@ -160,7 +162,23 @@ export interface TextNode extends VanimNodeBase {
   style?: VanimTextStyle;
 }
 
-export type VanimNode = ContainerNode | SpriteNode | SpritesheetAnimNode | GraphicsNode | TextNode;
+// --- Mesh (Phase 6) ---
+
+export interface MeshVertex {
+  x: number;
+  y: number;
+  u: number;  // UV координата 0-1
+  v: number;  // UV координата 0-1
+}
+
+export interface MeshNode extends VanimNodeBase {
+  type: 'mesh';
+  asset: string;
+  vertices: MeshVertex[];
+  indices: number[];   // треугольники (тройки индексов)
+}
+
+export type VanimNode = ContainerNode | SpriteNode | SpritesheetAnimNode | GraphicsNode | TextNode | MeshNode;
 
 // --- Particles ---
 

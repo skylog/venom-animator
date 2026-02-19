@@ -9,4 +9,12 @@ export default defineConfig({
       '$lib': fileURLToPath(new URL('./src/lib', import.meta.url)),
     },
   },
+  test: {
+    globals: true,
+    environment: 'node',
+    include: ['src/**/*.test.ts'],
+    alias: {
+      '$lib': fileURLToPath(new URL('./src/lib', import.meta.url)),
+    },
+  },
 });
