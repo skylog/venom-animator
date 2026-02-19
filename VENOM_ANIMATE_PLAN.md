@@ -162,6 +162,10 @@ venom-animator/
         prompt-builder.ts     # Промпт со схемой + текущим состоянием
         vanim-validator.ts    # Валидация AI-сгенерированного JSON
 
+      library/
+        db.ts                 # SQLite WASM (sql.js) + IndexedDB persistence
+        library-manager.ts    # CRUD анимаций, ассетов, шаблонов, тегов
+
     components/
       toolbar/
         Toolbar.svelte
@@ -183,6 +187,8 @@ venom-animator/
         Keyframe.svelte
         PlaybackControls.svelte
         TimeRuler.svelte
+      library/
+        LibraryPanel.svelte
       shared/
         SplitPane.svelte
         Modal.svelte
@@ -329,14 +335,18 @@ VenomAnimator (редактор)          VenomStrike (игра)
   - `ai/vanim-validator.ts` — валидация с actionable-ошибками на русском
   - `ai/prompt-builder.ts` — XML-структурированные промпты со схемой + примеры
 
-### Фаза 4: Редактирование
-- Добавление/удаление нод
-- Редактирование keyframes (drag на таймлайне)
-- EasingPicker с визуальными кривыми
+### Фаза 4: Редактирование ✅
+- Добавление/удаление нод (HierarchyPanel + type picker dropdown)
+- Редактирование keyframes (drag на таймлайне, inline KeyframeEditor)
+- EasingPicker с визуальными SVG-кривыми
 - ParticleConfigurator со слайдерами
-- Import ассетов (drag-n-drop / file picker для PNG/JPG/JSON)
-- Undo/Redo (уже есть стор, нужна интеграция во все операции)
+- Import ассетов (drag-n-drop на CanvasPanel)
+- Undo/Redo интегрировано во все операции
 - Save/Load файлов (File System Access API)
+- **Библиотека** (sql.js + IndexedDB):
+  - SQLite WASM база: animations, assets, templates, tags
+  - CRUD + поиск + теги + избранное
+  - LibraryPanel с табами (Animations/Templates/Assets), поиском, карточками
 
 ### Фаза 5: AI + Интеграция
 - AIPromptInput UI в Toolbar (текстовое поле → prompt-builder → буфер обмена)
@@ -351,6 +361,44 @@ VenomAnimator (редактор)          VenomStrike (игра)
 - Mesh-редактор в PropertiesPanel: визуальное перетаскивание вершин на канвасе
 - Пресеты mesh-деформаций: wave, bulge, twist, bend
 - Генерация mesh-сетки из прямоугольника (NxM grid)
+
+### Фаза 7: CLI Claude Code интеграция
+Цель: Claude Code CLI может полноценно работать с аниматором — создавать, редактировать, валидировать и управлять .vanim анимациями без GUI.
+
+- **CLI утилита** `src/cli/vanim-cli.ts` — Node.js скрипт:
+  - `vanim create <name>` — создать новый .vanim из шаблона
+  - `vanim validate <file>` — валидация с actionable-ошибками
+  - `vanim add-node <file> --type sprite --id hero --asset hero.png` — добавить ноду
+  - `vanim add-keyframe <file> --node hero --prop x --time 0 --value 100 --easing easeOutCubic` — добавить кейфрейм
+  - `vanim add-particle <file> --id sparks --mode burst --x 256 --y 256` — добавить частицы
+  - `vanim list-nodes <file>` — показать дерево нод
+  - `vanim info <file>` — показать мета (duration, nodes, particles)
+  - `vanim merge <base> <overlay>` — объединить два .vanim файла
+  - `vanim export <file> --format game` — экспорт в формат игры
+- **CLAUDE.md секция** с инструкциями:
+  - Как Claude Code должен работать с .vanim файлами
+  - Примеры типовых операций (создание анимации с нуля, модификация)
+  - JSON-шаблоны для быстрой генерации
+  - Правила валидации (ссылки на vanim-schema.ts)
+- **Headless preview** `src/cli/vanim-render.ts`:
+  - Рендеринг кадра в PNG через headless PixiJS (для превью в терминале)
+  - `vanim render <file> --time 250 --out frame.png`
+- **MCP Server** (опционально, для продвинутой интеграции):
+  - Claude Code подключает MCP-сервер аниматора
+  - Инструменты: create_animation, add_node, add_keyframe, validate, render_preview
+  - Прямой доступ к SQLite библиотеке (search, save, load)
+
+### Фаза 8: UI тесты (Playwright / Vitest Browser)
+- E2E тесты основных UI-сценариев:
+  - Создание/удаление нод через Hierarchy
+  - Переключение табов (Hierarchy ↔ Library)
+  - Редактирование свойств в PropertiesPanel
+  - Drag keyframes на таймлайне
+  - Save/Load через Toolbar
+  - Библиотека: сохранение и загрузка анимаций
+  - Playback: Play/Pause/Stop
+- Component тесты (Vitest + @testing-library/svelte):
+  - Каждый компонент: рендерится, реагирует на клики, обновляет стейт
 
 ---
 
