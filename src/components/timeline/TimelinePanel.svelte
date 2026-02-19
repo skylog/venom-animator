@@ -66,6 +66,7 @@
           </div>
           {#each tracks as track}
             <Track
+              nodeId={track.nodeId}
               property={track.property}
               keyframes={track.keyframes}
               pxPerMs={PX_PER_MS}

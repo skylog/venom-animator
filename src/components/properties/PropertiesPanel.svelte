@@ -2,7 +2,8 @@
   import { projectState } from '$lib/state/project.svelte';
   import { selectionState } from '$lib/state/selection.svelte';
   import { historyState } from '$lib/state/history.svelte';
-  import type { VanimNode, VanimParticle, KeyframeProperty } from '$lib/types/vanim';
+  import KeyframeEditor from './KeyframeEditor.svelte';
+  import ParticleConfigurator from './ParticleConfigurator.svelte';
 
   const selectedNode = $derived(
     selectionState.nodeId ? projectState.getNodeById(selectionState.nodeId) : undefined
@@ -32,25 +33,24 @@
     updateNodeProp(prop, (e.target as HTMLInputElement).value);
   }
 
-  // Свойства для отображения в зависимости от типа ноды
-  const numericProps: { key: string; label: string }[] = [
+  function handleSelectInput(prop: string, e: Event) {
+    updateNodeProp(prop, (e.target as HTMLSelectElement).value);
+  }
+
+  const numericProps: { key: string; label: string; step?: number }[] = [
     { key: 'x', label: 'X' },
     { key: 'y', label: 'Y' },
-    { key: 'scaleX', label: 'Scale X' },
-    { key: 'scaleY', label: 'Scale Y' },
-    { key: 'rotation', label: 'Rotation' },
-    { key: 'alpha', label: 'Alpha' },
-    { key: 'anchorX', label: 'Anchor X' },
-    { key: 'anchorY', label: 'Anchor Y' },
+    { key: 'scaleX', label: 'Scale X', step: 0.1 },
+    { key: 'scaleY', label: 'Scale Y', step: 0.1 },
+    { key: 'rotation', label: 'Rotation', step: 0.1 },
+    { key: 'alpha', label: 'Alpha', step: 0.1 },
+    { key: 'anchorX', label: 'Anchor X', step: 0.1 },
+    { key: 'anchorY', label: 'Anchor Y', step: 0.1 },
     { key: 'width', label: 'Width' },
     { key: 'height', label: 'Height' },
     { key: 'startTime', label: 'Start (ms)' },
     { key: 'duration', label: 'Duration (ms)' },
   ];
-
-  const keyframeProps = $derived(
-    selectedNode?.keyframes ? Object.keys(selectedNode.keyframes) as KeyframeProperty[] : []
-  );
 </script>
 
 <div class="properties-panel">
@@ -61,8 +61,20 @@
       <div class="section">
         <div class="section-title">Node: {selectedNode.id}</div>
         <div class="field">
-          <label>Type</label>
+          <span class="field-label">Type</span>
           <span class="type-badge">{selectedNode.type}</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Blend</span>
+          <select
+            value={selectedNode.blendMode ?? 'normal'}
+            onchange={(e) => handleSelectInput('blendMode', e)}
+          >
+            <option value="normal">normal</option>
+            <option value="add">add</option>
+            <option value="multiply">multiply</option>
+            <option value="screen">screen</option>
+          </select>
         </div>
       </div>
 
@@ -72,10 +84,10 @@
           {@const value = (selectedNode as any)[prop.key]}
           {#if value !== undefined || ['x', 'y', 'alpha'].includes(prop.key)}
             <div class="field">
-              <label>{prop.label}</label>
+              <span class="field-label">{prop.label}</span>
               <input
                 type="number"
-                step={prop.key.includes('scale') || prop.key.includes('alpha') || prop.key.includes('anchor') ? '0.1' : '1'}
+                step={prop.step ?? 1}
                 value={value ?? (prop.key === 'alpha' ? 1 : 0)}
                 onchange={(e) => handleNumberInput(prop.key, e)}
               />
@@ -88,7 +100,7 @@
         <div class="section">
           <div class="section-title">Text</div>
           <div class="field">
-            <label>Content</label>
+            <span class="field-label">Content</span>
             <input
               type="text"
               value={(selectedNode as any).text ?? ''}
@@ -98,52 +110,12 @@
         </div>
       {/if}
 
-      {#if keyframeProps.length > 0}
-        <div class="section">
-          <div class="section-title">Keyframes</div>
-          {#each keyframeProps as prop}
-            {@const kfs = selectedNode!.keyframes![prop]!}
-            <div class="keyframe-track">
-              <span class="kf-prop">{prop}</span>
-              <span class="kf-count">{kfs.length} kf</span>
-            </div>
-          {/each}
-        </div>
-      {/if}
+      <div class="section">
+        <KeyframeEditor nodeId={selectedNode.id} keyframes={selectedNode.keyframes ?? {}} />
+      </div>
 
     {:else if selectedParticle}
-      <div class="section">
-        <div class="section-title">Particle: {selectedParticle.id}</div>
-        <div class="field">
-          <label>Mode</label>
-          <span class="type-badge">{selectedParticle.mode}</span>
-        </div>
-        <div class="field">
-          <label>X</label>
-          <span>{selectedParticle.x}</span>
-        </div>
-        <div class="field">
-          <label>Y</label>
-          <span>{selectedParticle.y}</span>
-        </div>
-        <div class="field">
-          <label>Start</label>
-          <span>{selectedParticle.startTime}ms</span>
-        </div>
-        <div class="field">
-          <label>Count</label>
-          <span>{selectedParticle.config.count}</span>
-        </div>
-        <div class="field">
-          <label>Lifetime</label>
-          <span>{selectedParticle.config.lifetime}ms</span>
-        </div>
-        <div class="field">
-          <label>Color</label>
-          <span class="color-swatch" style="background: {selectedParticle.config.color}"></span>
-          <span>{selectedParticle.config.color}</span>
-        </div>
-      </div>
+      <ParticleConfigurator particle={selectedParticle} />
 
     {:else}
       <div class="empty-state">
@@ -201,7 +173,7 @@
     font-size: 12px;
   }
 
-  .field label {
+  .field-label {
     width: 70px;
     color: #888;
     font-size: 11px;
@@ -225,40 +197,22 @@
     border-color: #007acc;
   }
 
+  .field select {
+    flex: 1;
+    background: #2d2d2d;
+    border: 1px solid #3a3a3a;
+    border-radius: 3px;
+    color: #ccc;
+    padding: 2px 4px;
+    font-size: 11px;
+  }
+
   .type-badge {
     font-size: 10px;
     padding: 1px 6px;
     border-radius: 3px;
     background: #333;
     color: #aaa;
-  }
-
-  .keyframe-track {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 2px 0;
-    font-size: 12px;
-  }
-
-  .kf-prop {
-    color: #ccc;
-    font-family: monospace;
-    font-size: 11px;
-  }
-
-  .kf-count {
-    margin-left: auto;
-    color: #666;
-    font-size: 10px;
-  }
-
-  .color-swatch {
-    width: 14px;
-    height: 14px;
-    border-radius: 2px;
-    border: 1px solid #555;
-    flex-shrink: 0;
   }
 
   .empty-state {

@@ -1,43 +1,39 @@
 <script lang="ts">
   import { projectState } from '$lib/state/project.svelte';
   import { historyState } from '$lib/state/history.svelte';
+  import { selectionState } from '$lib/state/selection.svelte';
+  import { openVanimFile, saveVanimFile } from '$lib/io/save-load';
 
   function handleNew() {
     if (projectState.dirty && !confirm('Несохранённые изменения будут потеряны. Продолжить?')) {
       return;
     }
     projectState.newDocument();
+    selectionState.clear();
     historyState.clear();
   }
 
   async function handleOpen() {
     try {
-      const [fileHandle] = await (window as any).showOpenFilePicker({
-        types: [{ description: 'Vanim Animation', accept: { 'application/json': ['.vanim', '.json'] } }],
-      });
-      const file = await fileHandle.getFile();
-      const text = await file.text();
-      const doc = JSON.parse(text);
-      projectState.setDocument(doc, fileHandle.name);
+      const result = await openVanimFile();
+      if (!result) return;
+      projectState.setDocument(result.doc, result.fileName);
+      selectionState.clear();
       historyState.clear();
-    } catch {
-      // Пользователь отменил
+    } catch (e) {
+      alert(String(e));
     }
   }
 
   async function handleSave() {
     try {
-      const handle = await (window as any).showSaveFilePicker({
-        suggestedName: `${projectState.document.name}.vanim`,
-        types: [{ description: 'Vanim Animation', accept: { 'application/json': ['.vanim'] } }],
-      });
-      const writable = await handle.createWritable();
-      await writable.write(JSON.stringify(projectState.document, null, 2));
-      await writable.close();
-      projectState.filePath = handle.name;
-      projectState.dirty = false;
-    } catch {
-      // Пользователь отменил
+      const name = await saveVanimFile(projectState.document, projectState.filePath ?? undefined);
+      if (name) {
+        projectState.filePath = name;
+        projectState.dirty = false;
+      }
+    } catch (e) {
+      alert(String(e));
     }
   }
 
@@ -47,6 +43,20 @@
 
   function handleRedo() {
     historyState.redo();
+  }
+
+  async function handlePasteVanim() {
+    try {
+      const text = await navigator.clipboard.readText();
+      const doc = JSON.parse(text);
+      if (doc.version && doc.nodes) {
+        projectState.setDocument(doc);
+        selectionState.clear();
+        historyState.clear();
+      }
+    } catch {
+      // не .vanim в буфере
+    }
   }
 </script>
 
@@ -75,6 +85,12 @@
   </div>
 
   <div class="toolbar-separator"></div>
+
+  <div class="toolbar-group">
+    <button class="tool-btn" onclick={handlePasteVanim} title="Вставить .vanim из буфера (Ctrl+V)">
+      Paste .vanim
+    </button>
+  </div>
 
   <div class="project-info">
     <span class="project-name">{projectState.document.name}</span>

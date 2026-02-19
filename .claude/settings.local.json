@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git rm:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm test:*)",
+      "Bash(git -C /Users/n.biryukov/Projects/VenomAnimator status)",
+      "Bash(git -C /Users/n.biryukov/Projects/VenomAnimator diff --stat)",
+      "Bash(git -C /Users/n.biryukov/Projects/VenomAnimator log --oneline -5)",
+      "Bash(git -C /Users/n.biryukov/Projects/VenomAnimator add package.json package-lock.json vite.config.ts src/App.svelte src/lib/types/vanim.ts src/lib/state/selection.svelte.ts src/lib/state/playback.svelte.ts src/lib/state/history.svelte.ts src/components/ src/lib/types/easing.test.ts src/lib/preview/KeyframeEvaluator.test.ts src/lib/state/project.test.ts src/lib/ai/ src/lib/io/ VENOM_ANIMATE_PLAN.md)",
+      "Bash(git -C:*)"
+    ]
+  }
+}
