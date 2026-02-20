@@ -42,8 +42,13 @@
     return groups;
   });
 
+  // Ширина контента таймлайна
+  const contentWidth = $derived(playbackState.duration * timelineState.pxPerMs + timelineState.labelWidth + 50);
+
   function handleWheel(e: WheelEvent) {
-    if (!e.ctrlKey && !e.metaKey) return;
+    // Shift+scroll = горизонтальный скролл (нативный, не перехватываем)
+    if (e.shiftKey) return;
+    // Обычный scroll = zoom
     e.preventDefault();
     if (e.deltaY < 0) {
       timelineState.zoomIn();
@@ -63,7 +68,7 @@
     <TimeRuler />
     <StateBar />
 
-    <div class="tracks-container">
+    <div class="tracks-container" style="min-width: {contentWidth}px">
       {#each [...groupedTracks().entries()] as [nodeId, tracks]}
         <!-- svelte-ignore a11y_click_events_have_key_events -->
         <!-- svelte-ignore a11y_no_static_element_interactions -->
