@@ -348,11 +348,13 @@ VenomAnimator (редактор)          VenomStrike (игра)
   - CRUD + поиск + теги + избранное
   - LibraryPanel с табами (Animations/Templates/Assets), поиском, карточками
 
-### Фаза 5: AI + Интеграция
+### Фаза 5: AI + Интеграция ✅
 - AIPromptInput UI в Toolbar (текстовое поле → prompt-builder → буфер обмена)
-- Import AI-сгенерированного JSON (вставка из буфера → validator → load)
-- Export кнопка → копирует в static/animations/
-- Портировать SnakeStrikeEffect на .vanim как proof-of-concept
+- Import AI-сгенерированного JSON (вставка из буфера → validator → load с toast-уведомлениями)
+- Export кнопка (download + File System Access API)
+- Toast-система уведомлений (вместо alert)
+- Ctrl+V хоткей для paste .vanim
+- **Proof-of-concept:** `static/examples/snake-strike.vanim` (9 нод, 2 системы частиц, 1200ms)
 
 ### Фаза 6: Mesh-ноды (деформации спрайтов)
 - `MeshNode` в vanim.ts — вершины (x,y,u,v) + индексы треугольников (уже в типах)
