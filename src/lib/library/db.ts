@@ -231,6 +231,7 @@ const BUILTIN_ANIMATIONS = [
   { name: 'Loading Spinner', category: 'ui', description: 'Лоадер с двумя орбитальными точками', url: '/examples/loading-spinner.vanim' },
   { name: 'Multiplier Badge', category: 'effect', description: 'Бейдж множителя с пульсацией и свечением', url: '/examples/multiplier-badge.vanim' },
   { name: 'Wild Expand', category: 'slot-reel', description: 'Расширяющийся Wild символ на весь рил', url: '/examples/wild-expand.vanim' },
+  { name: 'Skull Symbol', category: 'slot-reel', description: 'Символ черепа с зелёным свечением — idle/land/win/dim', url: '/examples/skull-symbol.vanim' },
 ];
 
 const BUILTIN_ASSETS = [
