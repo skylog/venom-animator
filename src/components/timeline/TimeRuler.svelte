@@ -26,6 +26,10 @@
 
   const playheadX = $derived(playbackState.currentTime * pxPerMs + offsetLeft);
 
+  // Регион (подсветка)
+  const regionX = $derived(playbackState.hasRegion ? playbackState.regionStart! * pxPerMs + offsetLeft : 0);
+  const regionW = $derived(playbackState.hasRegion ? (playbackState.regionEnd! - playbackState.regionStart!) * pxPerMs : 0);
+
   function getTickStep(duration: number, pxPerMs: number): number {
     const minPxBetweenTicks = 40;
     const steps = [10, 25, 50, 100, 200, 250, 500, 1000];
@@ -54,6 +58,10 @@
       {/if}
     </div>
   {/each}
+
+  {#if playbackState.hasRegion}
+    <div class="region-highlight" style="left: {regionX}px; width: {regionW}px"></div>
+  {/if}
 
   <div class="playhead" style="left: {playheadX}px"></div>
 </div>
@@ -90,6 +98,17 @@
     font-size: 9px;
     color: #666;
     white-space: nowrap;
+  }
+
+  .region-highlight {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: rgba(78, 201, 176, 0.15);
+    border-left: 1px solid rgba(78, 201, 176, 0.5);
+    border-right: 1px solid rgba(78, 201, 176, 0.5);
+    pointer-events: none;
+    z-index: 1;
   }
 
   .playhead {

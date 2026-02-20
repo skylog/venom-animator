@@ -29,6 +29,16 @@
     <span class="time-sep">/</span>
     <span class="time-total">{formatTime(playbackState.duration)}</span>
   </div>
+
+  {#if playbackState.hasRegion}
+    <button
+      class="ctrl-btn region-btn"
+      onclick={() => playbackState.clearRegion()}
+      title="Clear region"
+    >
+      <span class="region-indicator">{formatTime(playbackState.regionStart!)}–{formatTime(playbackState.regionEnd!)}</span>
+    </button>
+  {/if}
 </div>
 
 <style>
@@ -87,5 +97,24 @@
 
   .time-sep {
     color: #555;
+  }
+
+  .region-btn {
+    width: auto;
+    padding: 0 6px;
+    margin-left: 4px;
+    background: rgba(78, 201, 176, 0.15);
+    border-color: rgba(78, 201, 176, 0.4);
+  }
+
+  .region-btn:hover {
+    background: rgba(78, 201, 176, 0.25);
+  }
+
+  .region-indicator {
+    font-family: monospace;
+    font-size: 9px;
+    color: #4ec9b0;
+    white-space: nowrap;
   }
 </style>

@@ -7,6 +7,7 @@
   import PlaybackControls from './PlaybackControls.svelte';
   import TimeRuler from './TimeRuler.svelte';
   import Track from './Track.svelte';
+  import StateBar from './StateBar.svelte';
 
   // Все ноды с keyframes
   const tracksData = $derived(() => {
@@ -60,6 +61,7 @@
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="timeline-content" onwheel={handleWheel}>
     <TimeRuler />
+    <StateBar />
 
     <div class="tracks-container">
       {#each [...groupedTracks().entries()] as [nodeId, tracks]}

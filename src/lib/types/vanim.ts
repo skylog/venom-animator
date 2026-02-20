@@ -233,6 +233,16 @@ export interface NumberParam {
 
 export type VanimParam = ColorParam | StringParam | NumberParam;
 
+// --- States (named time regions) ---
+
+export interface VanimState {
+  id: string;
+  label: string;
+  startTime: number;
+  endTime: number;
+  color?: string;
+}
+
 // --- Document ---
 
 export interface VanimDocument {
@@ -244,5 +254,6 @@ export interface VanimDocument {
   assets?: Record<string, VanimAsset>;
   nodes: VanimNode[];
   particles?: VanimParticle[];
+  states?: VanimState[];
   params?: Record<string, VanimParam>;
 }

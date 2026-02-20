@@ -4,6 +4,10 @@ class PlaybackState {
   loop = $state(false);
   speed = $state(1);
 
+  // Регион-плейбэк (null = вся анимация)
+  regionStart = $state<number | null>(null);
+  regionEnd = $state<number | null>(null);
+
   private _rafId: number | null = null;
   private _lastTimestamp: number | null = null;
   private _duration = $state(1000);
@@ -20,6 +24,31 @@ class PlaybackState {
 
   get duration(): number {
     return this._duration;
+  }
+
+  get hasRegion(): boolean {
+    return this.regionStart !== null && this.regionEnd !== null;
+  }
+
+  /** Эффективные границы плейбэка (регион или вся анимация) */
+  get effectiveStart(): number {
+    return this.regionStart ?? 0;
+  }
+
+  get effectiveEnd(): number {
+    return this.regionEnd ?? this._duration;
+  }
+
+  setRegion(start: number, end: number): void {
+    this.regionStart = start;
+    this.regionEnd = end;
+    // Перемещаем playhead в начало региона
+    this.seek(start);
+  }
+
+  clearRegion(): void {
+    this.regionStart = null;
+    this.regionEnd = null;
   }
 
   play(): void {
@@ -39,17 +68,17 @@ class PlaybackState {
 
   stop(): void {
     this.pause();
-    this.currentTime = 0;
-    this._onFrame?.(0);
+    this.currentTime = this.effectiveStart;
+    this._onFrame?.(this.currentTime);
   }
 
   togglePlay(): void {
     if (this.playing) {
       this.pause();
     } else {
-      // Если в конце и не loop — сбрасываем
-      if (this.currentTime >= this._duration && !this.loop) {
-        this.currentTime = 0;
+      // Если в конце региона/анимации и не loop — сбрасываем к началу
+      if (this.currentTime >= this.effectiveEnd && !this.loop) {
+        this.currentTime = this.effectiveStart;
       }
       this.play();
     }
@@ -67,11 +96,15 @@ class PlaybackState {
       const deltaMs = (timestamp - this._lastTimestamp) * this.speed;
       this.currentTime += deltaMs;
 
-      if (this.currentTime >= this._duration) {
+      const end = this.effectiveEnd;
+      const start = this.effectiveStart;
+
+      if (this.currentTime >= end) {
         if (this.loop) {
-          this.currentTime = this.currentTime % this._duration;
+          const range = end - start;
+          this.currentTime = start + ((this.currentTime - start) % range);
         } else {
-          this.currentTime = this._duration;
+          this.currentTime = end;
           this.playing = false;
           this._onFrame?.(this.currentTime);
           return;
