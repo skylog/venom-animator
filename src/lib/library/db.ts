@@ -82,11 +82,13 @@ export async function initDB(): Promise<Database> {
   if (db) return db;
 
   const SQL = await initSqlJs({
-    locateFile: (file: string) => `https://sql.js.org/dist/${file}`,
+    locateFile: () => '/sql-wasm.wasm',
   });
 
   // Пробуем загрузить из IndexedDB
   const saved = await loadFromIndexedDB();
+  const isFirstRun = !saved;
+
   if (saved) {
     db = new SQL.Database(saved);
   } else {
@@ -96,12 +98,50 @@ export async function initDB(): Promise<Database> {
   // Всегда применяем schema (IF NOT EXISTS безопасно)
   db.run(SCHEMA);
 
+  // При первом запуске загружаем встроенные шаблоны
+  if (isFirstRun) {
+    await seedBuiltinTemplates();
+  }
+
   return db;
 }
 
 export function getDB(): Database {
   if (!db) throw new Error('Database not initialized. Call initDB() first.');
   return db;
+}
+
+/**
+ * Выполняет SQL с параметрами через prepared statement.
+ * sql.js db.run(sql, params) НЕ биндит параметры — используем prepare().
+ */
+export function dbRun(sql: string, params?: any[]): void {
+  const d = getDB();
+  if (!params || params.length === 0) {
+    d.run(sql);
+    return;
+  }
+  const stmt = d.prepare(sql);
+  stmt.run(params);
+  stmt.free();
+}
+
+/**
+ * Выполняет SELECT с параметрами через prepared statement.
+ */
+export function dbQuery(sql: string, params?: any[]): { columns: string[]; values: any[][] } | null {
+  const d = getDB();
+  const stmt = d.prepare(sql);
+  if (params && params.length > 0) {
+    stmt.bind(params);
+  }
+  const columns: string[] = stmt.getColumnNames();
+  const values: any[][] = [];
+  while (stmt.step()) {
+    values.push(stmt.get());
+  }
+  stmt.free();
+  return values.length > 0 ? { columns, values } : null;
 }
 
 /**
@@ -127,7 +167,7 @@ export function exportDB(): Uint8Array {
  */
 export async function importDB(data: Uint8Array): Promise<void> {
   const SQL = await initSqlJs({
-    locateFile: (file: string) => `https://sql.js.org/dist/${file}`,
+    locateFile: () => '/sql-wasm.wasm',
   });
 
   if (db) db.close();
@@ -171,4 +211,37 @@ async function loadFromIndexedDB(): Promise<Uint8Array | null> {
   } catch {
     return null;
   }
+}
+
+// --- Seed встроенных шаблонов ---
+
+const BUILTIN_TEMPLATES = [
+  { name: 'Reel Symbol', category: 'slot-reel', description: 'Иконка на барабане: Idle → Land → Win → Dim', url: '/templates/reel-symbol.vanim' },
+  { name: 'Win Popup', category: 'popup', description: 'Всплывающее окно выигрыша: Intro → Hold → Outro', url: '/templates/win-popup.vanim' },
+  { name: 'Free Spins Trigger', category: 'popup', description: 'Триггер фриспинов: Flash → Reveal → Hold → Dismiss', url: '/templates/free-spins-trigger.vanim' },
+  { name: 'Scatter Collect', category: 'slot-reel', description: 'Скаттер с анимацией сбора: Anticipate → Collect → Settle', url: '/templates/scatter-collect.vanim' },
+  { name: 'Big Win Counter', category: 'popup', description: 'Счётчик крупного выигрыша: Intro → Count Up → Celebrate → Dismiss', url: '/templates/big-win-counter.vanim' },
+  { name: 'Bonus Meter Fill', category: 'ui', description: 'Прогресс-бар бонуса: Idle → Fill → Complete', url: '/templates/bonus-meter-fill.vanim' },
+];
+
+async function seedBuiltinTemplates(): Promise<void> {
+  if (!db) return;
+
+  for (const tmpl of BUILTIN_TEMPLATES) {
+    try {
+      const resp = await fetch(tmpl.url);
+      if (!resp.ok) continue;
+      const json = await resp.text();
+      const id = tmpl.name.toLowerCase().replace(/\s+/g, '-');
+
+      dbRun(
+        `INSERT OR IGNORE INTO templates (id, name, description, category, json) VALUES (?, ?, ?, ?, ?)`,
+        [id, tmpl.name, tmpl.description, tmpl.category, json]
+      );
+    } catch {
+      // Пропускаем если файл недоступен
+    }
+  }
+
+  await persistDB();
 }

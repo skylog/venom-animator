@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "name": "win-popup",
+  "duration": 3000,
+  "width": 512,
+  "height": 256,
+  "assets": {},
+  "nodes": [
+    {
+      "id": "root",
+      "type": "container",
+      "children": ["bg-glow", "panel", "title-text", "amount-text"]
+    },
+    {
+      "id": "bg-glow",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "circle",
+        "cx": 256,
+        "cy": 128,
+        "radius": 120,
+        "fill": { "color": "#FFD700", "alpha": 0.2 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 300, "value": 0.6, "easing": "easeOutQuad" },
+          { "time": 2500, "value": 0.6 },
+          { "time": 3000, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.5 },
+          { "time": 300, "value": 1.2, "easing": "easeOutQuad" },
+          { "time": 2500, "value": 1.2 },
+          { "time": 3000, "value": 0.8, "easing": "easeInQuad" }
+        ]
+      }
+    },
+    {
+      "id": "panel",
+      "type": "graphics",
+      "graphics": {
+        "type": "roundRect",
+        "x": 56,
+        "y": 48,
+        "width": 400,
+        "height": 160,
+        "radius": 20,
+        "fill": { "color": "#1a1a2e", "alpha": 0.9 },
+        "stroke": { "width": 2, "color": "#FFD700", "alpha": 0.8 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 200, "value": 1, "easing": "easeOutCubic" },
+          { "time": 2600, "value": 1 },
+          { "time": 3000, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.8 },
+          { "time": 200, "value": 1.0, "easing": "easeOutBack" },
+          { "time": 2600, "value": 1.0 },
+          { "time": 3000, "value": 0.9, "easing": "easeInQuad" }
+        ]
+      }
+    },
+    {
+      "id": "title-text",
+      "type": "text",
+      "text": "YOU WIN!",
+      "x": 256,
+      "y": 90,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "style": {
+        "fontFamily": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 32,
+        "fill": "#FFD700"
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 300, "value": 1, "easing": "easeOutCubic" },
+          { "time": 2500, "value": 1 },
+          { "time": 3000, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.5 },
+          { "time": 300, "value": 1.0, "easing": "easeOutBack" },
+          { "time": 800, "value": 1.0 },
+          { "time": 900, "value": 1.05, "easing": "easeInOutSine" },
+          { "time": 1000, "value": 1.0, "easing": "easeInOutSine" }
+        ]
+      }
+    },
+    {
+      "id": "amount-text",
+      "type": "text",
+      "text": "{{amount}}",
+      "x": 256,
+      "y": 150,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "style": {
+        "fontFamily": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 48,
+        "fill": "#FFFFFF"
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 400, "value": 0 },
+          { "time": 600, "value": 1, "easing": "easeOutCubic" },
+          { "time": 2500, "value": 1 },
+          { "time": 3000, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 400, "value": 1.5 },
+          { "time": 700, "value": 1.0, "easing": "easeOutBack" },
+          { "time": 1200, "value": 1.0 },
+          { "time": 1400, "value": 1.08, "easing": "easeInOutSine" },
+          { "time": 1600, "value": 1.0, "easing": "easeInOutSine" },
+          { "time": 1800, "value": 1.05, "easing": "easeInOutSine" },
+          { "time": 2000, "value": 1.0, "easing": "easeInOutSine" }
+        ]
+      }
+    }
+  ],
+  "particles": [
+    {
+      "id": "celebration-sparks",
+      "startTime": 500,
+      "mode": "burst",
+      "x": 256,
+      "y": 128,
+      "config": {
+        "count": 24,
+        "lifetime": 800,
+        "speed": { "min": 3, "max": 8 },
+        "size": { "min": 1, "max": 3 },
+        "color": "#FFD700",
+        "alpha": { "start": 1, "end": 0 },
+        "direction": { "min": 0, "max": 6.283 },
+        "gravity": 0.5,
+        "blendMode": "add"
+      }
+    }
+  ],
+  "states": [
+    { "id": "intro", "label": "Intro", "startTime": 0, "endTime": 700, "color": "#4a9eff" },
+    { "id": "hold", "label": "Hold", "startTime": 700, "endTime": 2500, "color": "#4ec9b0" },
+    { "id": "outro", "label": "Outro", "startTime": 2500, "endTime": 3000, "color": "#ff6b6b" }
+  ],
+  "params": {
+    "amount": { "type": "string", "default": "$1,000" }
+  }
+}
