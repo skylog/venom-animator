@@ -6,7 +6,7 @@ class PlaybackState {
 
   private _rafId: number | null = null;
   private _lastTimestamp: number | null = null;
-  private _duration = 1000;
+  private _duration = $state(1000);
   private _onFrame: ((time: number) => void) | null = null;
 
   /** Устанавливает callback для каждого кадра (вызывается из CanvasPanel) */
