@@ -4,8 +4,8 @@ import { renderNodes, type RenderedNode } from './NodeRenderer';
 import { evaluateAllKeyframes, getNodeLocalTime } from './KeyframeEvaluator';
 import { ParticleSystem } from './ParticleRenderer';
 import { drawShape } from './NodeRenderer';
-import { Sprite, Graphics } from 'pixi.js';
-import type { KeyframeProperty, GraphicsNode } from '$lib/types/vanim';
+import { Sprite, Graphics, MeshSimple } from 'pixi.js';
+import type { KeyframeProperty, GraphicsNode, MeshNode } from '$lib/types/vanim';
 
 /**
  * Обёртка PixiJS 8 Application для превью в редакторе.
@@ -176,6 +176,34 @@ export class PreviewApp {
         if (prop in shape) shape[prop] = value;
       }
       drawShape(g, shape);
+    }
+
+    // Анимация вершин mesh
+    if (rendered.node.type === 'mesh' && obj instanceof MeshSimple) {
+      const meshNode = rendered.node as MeshNode;
+      const verts = obj.vertices;
+      let changed = false;
+      for (const [prop, value] of Object.entries(values)) {
+        if (typeof value !== 'number') continue;
+        const vm = prop.match(/^vertex(\d+)_(x|y)$/);
+        if (vm) {
+          const idx = parseInt(vm[1]);
+          const axis = vm[2] === 'x' ? 0 : 1;
+          const baseVal = axis === 0
+            ? meshNode.vertices[idx]?.x ?? 0
+            : meshNode.vertices[idx]?.y ?? 0;
+          verts[idx * 2 + axis] = baseVal + value;
+          changed = true;
+        }
+      }
+      if (changed) {
+        // PixiJS 8: обновляем буфер позиций
+        try {
+          const geo = (obj as any).geometry;
+          const buf = geo?.getBuffer?.('aPosition') ?? geo?.buffers?.[0];
+          if (buf?.update) buf.update();
+        } catch { /* fallback — PixiJS обновит при следующем рендере */ }
+      }
     }
   }
 

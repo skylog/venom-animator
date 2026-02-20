@@ -11,279 +11,223 @@
     {
       "id": "root",
       "type": "container",
-      "children": ["bg-vignette", "glow-pulse", "glow-core", "skull-shadow", "skull", "eye-glow-l", "eye-glow-r", "crack-flash-1", "crack-flash-2", "energy-ring", "impact-flash", "win-ring-2", "border-flash"]
+      "children": ["bg-dim", "skull-shadow", "skull-mesh", "impact-flash", "energy-ring-1", "energy-ring-2", "energy-ring-3", "border-glow", "top-streak", "bot-streak", "screen-flash"]
     },
     {
-      "id": "bg-vignette",
+      "id": "bg-dim",
       "type": "graphics",
-      "graphics": { "type": "rect", "x": 0, "y": 0, "width": 280, "height": 280, "fill": { "color": "#000000", "alpha": 0.5 } },
+      "graphics": { "type": "rect", "x": 0, "y": 0, "width": 280, "height": 280, "fill": { "color": "#000000", "alpha": 0.6 } },
       "keyframes": {
         "alpha": [
-          { "time": 0, "value": 0.3 },
-          { "time": 400, "value": 0.3 },
-          { "time": 500, "value": 0.6, "easing": "easeOutQuad" },
-          { "time": 700, "value": 0.7, "easing": "easeOutQuad" },
-          { "time": 1400, "value": 0.5 },
+          { "time": 0, "value": 0 },
+          { "time": 300, "value": 0.4, "easing": "easeOutQuad" },
+          { "time": 700, "value": 0.6, "easing": "easeOutQuad" },
+          { "time": 1400, "value": 0.4 },
           { "time": 1800, "value": 0, "easing": "easeInQuad" }
-        ]
-      }
-    },
-    {
-      "id": "glow-pulse",
-      "type": "graphics",
-      "blendMode": "add",
-      "graphics": { "type": "circle", "cx": 140, "cy": 130, "radius": 110, "fill": { "color": "#00FF44", "alpha": 0.06 } },
-      "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0.3 },
-          { "time": 200, "value": 0.5, "easing": "easeInOutSine" },
-          { "time": 400, "value": 0.3, "easing": "easeInOutSine" },
-          { "time": 500, "value": 0.7, "easing": "easeOutQuad" },
-          { "time": 700, "value": 1.0, "easing": "easeOutQuad" },
-          { "time": 1000, "value": 0.8, "easing": "easeInOutSine" },
-          { "time": 1200, "value": 1.0, "easing": "easeInOutSine" },
-          { "time": 1400, "value": 0.6 },
-          { "time": 1800, "value": 0, "easing": "easeInQuad" }
-        ],
-        "scale": [
-          { "time": 0, "value": 0.9 },
-          { "time": 200, "value": 1.1, "easing": "easeInOutSine" },
-          { "time": 400, "value": 0.9, "easing": "easeInOutSine" },
-          { "time": 500, "value": 1.3, "easing": "easeOutQuad" },
-          { "time": 700, "value": 1.5, "easing": "easeOutCubic" },
-          { "time": 1000, "value": 1.3, "easing": "easeInOutSine" },
-          { "time": 1200, "value": 1.5, "easing": "easeInOutSine" },
-          { "time": 1400, "value": 1.0 },
-          { "time": 1800, "value": 0.5, "easing": "easeInQuad" }
-        ]
-      }
-    },
-    {
-      "id": "glow-core",
-      "type": "graphics",
-      "blendMode": "add",
-      "graphics": { "type": "circle", "cx": 140, "cy": 130, "radius": 60, "fill": { "color": "#00FF44", "alpha": 0.1 } },
-      "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0.2 },
-          { "time": 200, "value": 0.4, "easing": "easeInOutSine" },
-          { "time": 400, "value": 0.2, "easing": "easeInOutSine" },
-          { "time": 700, "value": 0.8, "easing": "easeOutCubic" },
-          { "time": 1000, "value": 0.5, "easing": "easeInOutSine" },
-          { "time": 1200, "value": 0.8, "easing": "easeInOutSine" },
-          { "time": 1400, "value": 0.3 },
-          { "time": 1800, "value": 0 }
-        ],
-        "scale": [
-          { "time": 0, "value": 1.0 },
-          { "time": 200, "value": 1.2, "easing": "easeInOutSine" },
-          { "time": 400, "value": 1.0, "easing": "easeInOutSine" },
-          { "time": 700, "value": 1.8, "easing": "easeOutCubic" },
-          { "time": 1200, "value": 1.4, "easing": "easeInOutSine" },
-          { "time": 1800, "value": 0.5 }
         ]
       }
     },
     {
       "id": "skull-shadow",
       "type": "graphics",
-      "graphics": { "type": "circle", "cx": 144, "cy": 220, "radius": 60, "fill": { "color": "#000000", "alpha": 0.5 } },
+      "graphics": { "type": "ellipse", "cx": 140, "cy": 230, "rx": 50, "ry": 12, "fill": { "color": "#000000", "alpha": 0.6 } },
       "keyframes": {
         "alpha": [
-          { "time": 0, "value": 0.3 },
-          { "time": 400, "value": 0.3 },
-          { "time": 500, "value": 0.6, "easing": "easeOutQuad" },
-          { "time": 600, "value": 0.2, "easing": "easeOutQuad" },
-          { "time": 800, "value": 0.4, "easing": "easeOutQuad" },
-          { "time": 1400, "value": 0.3 },
-          { "time": 1800, "value": 0 }
+          { "time": 0, "value": 0.4 },
+          { "time": 400, "value": 0.4 },
+          { "time": 500, "value": 0.7, "easing": "easeOutQuad" },
+          { "time": 600, "value": 0.3, "easing": "easeOutQuad" },
+          { "time": 800, "value": 0.5, "easing": "easeOutQuad" },
+          { "time": 1400, "value": 0.4 },
+          { "time": 1800, "value": 0, "easing": "easeInQuad" }
         ],
         "scaleX": [
           { "time": 0, "value": 1.0 },
-          { "time": 500, "value": 1.2, "easing": "easeOutQuad" },
-          { "time": 600, "value": 0.8, "easing": "easeOutQuad" },
+          { "time": 450, "value": 0.8, "easing": "easeOutQuad" },
+          { "time": 500, "value": 1.3, "easing": "easeOutQuad" },
+          { "time": 600, "value": 0.9, "easing": "easeOutQuad" },
           { "time": 800, "value": 1.0, "easing": "easeOutQuad" }
         ]
       }
     },
     {
-      "id": "skull",
-      "type": "sprite",
+      "id": "skull-mesh",
+      "type": "mesh",
       "asset": "skull",
-      "x": 140, "y": 130,
-      "anchorX": 0.5, "anchorY": 0.5,
-      "width": 200, "height": 200,
+      "vertices": [
+        { "x": 45, "y": 33, "u": 0.0, "v": 0.0 },
+        { "x": 108, "y": 33, "u": 0.333, "v": 0.0 },
+        { "x": 172, "y": 33, "u": 0.667, "v": 0.0 },
+        { "x": 235, "y": 33, "u": 1.0, "v": 0.0 },
+
+        { "x": 45, "y": 96, "u": 0.0, "v": 0.333 },
+        { "x": 108, "y": 96, "u": 0.333, "v": 0.333 },
+        { "x": 172, "y": 96, "u": 0.667, "v": 0.333 },
+        { "x": 235, "y": 96, "u": 1.0, "v": 0.333 },
+
+        { "x": 45, "y": 160, "u": 0.0, "v": 0.667 },
+        { "x": 108, "y": 160, "u": 0.333, "v": 0.667 },
+        { "x": 172, "y": 160, "u": 0.667, "v": 0.667 },
+        { "x": 235, "y": 160, "u": 1.0, "v": 0.667 },
+
+        { "x": 45, "y": 223, "u": 0.0, "v": 1.0 },
+        { "x": 108, "y": 223, "u": 0.333, "v": 1.0 },
+        { "x": 172, "y": 223, "u": 0.667, "v": 1.0 },
+        { "x": 235, "y": 223, "u": 1.0, "v": 1.0 }
+      ],
+      "indices": [
+        0,1,4, 1,5,4,   1,2,5, 2,6,5,   2,3,6, 3,7,6,
+        4,5,8, 5,9,8,   5,6,9, 6,10,9,  6,7,10, 7,11,10,
+        8,9,12, 9,13,12, 9,10,13, 10,14,13, 10,11,14, 11,15,14
+      ],
       "keyframes": {
         "alpha": [
           { "time": 0, "value": 1.0 },
           { "time": 1400, "value": 1.0 },
-          { "time": 1800, "value": 0, "easing": "easeInQuad" }
+          { "time": 1800, "value": 0, "easing": "easeInCubic" }
         ],
         "scale": [
           { "time": 0, "value": 1.0 },
-          { "time": 200, "value": 1.03, "easing": "easeInOutSine" },
+          { "time": 100, "value": 1.02, "easing": "easeInOutSine" },
+          { "time": 200, "value": 0.98, "easing": "easeInOutSine" },
+          { "time": 300, "value": 1.01, "easing": "easeInOutSine" },
           { "time": 400, "value": 1.0, "easing": "easeInOutSine" },
-          { "time": 450, "value": 1.06, "easing": "easeOutQuad" },
-          { "time": 500, "value": 0.88, "easing": "easeOutQuad" },
-          { "time": 600, "value": 1.04, "easing": "easeOutBack" },
-          { "time": 700, "value": 1.0, "easing": "easeInOutQuad" },
-          { "time": 750, "value": 1.12, "easing": "easeOutQuad" },
-          { "time": 900, "value": 1.0, "easing": "easeOutBack" },
-          { "time": 1000, "value": 1.06, "easing": "easeInOutSine" },
-          { "time": 1100, "value": 1.0, "easing": "easeInOutSine" },
-          { "time": 1200, "value": 1.04, "easing": "easeInOutSine" },
-          { "time": 1300, "value": 1.0, "easing": "easeInOutSine" }
+          { "time": 420, "value": 1.08, "easing": "easeOutQuad" },
+          { "time": 500, "value": 0.88, "easing": "easeOutCubic" },
+          { "time": 580, "value": 1.04, "easing": "easeOutBack" },
+          { "time": 660, "value": 0.97, "easing": "easeOutQuad" },
+          { "time": 700, "value": 1.0, "easing": "easeOutQuad" },
+          { "time": 720, "value": 1.12, "easing": "easeOutQuad" },
+          { "time": 850, "value": 0.96, "easing": "easeOutQuad" },
+          { "time": 950, "value": 1.02, "easing": "easeOutQuad" },
+          { "time": 1050, "value": 1.0, "easing": "easeInOutQuad" }
         ],
         "y": [
           { "time": 0, "value": 0 },
-          { "time": 200, "value": -3, "easing": "easeInOutSine" },
+          { "time": 100, "value": -2, "easing": "easeInOutSine" },
+          { "time": 200, "value": 2, "easing": "easeInOutSine" },
+          { "time": 300, "value": -1, "easing": "easeInOutSine" },
           { "time": 400, "value": 0, "easing": "easeInOutSine" },
-          { "time": 450, "value": -8, "easing": "easeOutQuad" },
-          { "time": 500, "value": 6, "easing": "easeOutQuad" },
-          { "time": 600, "value": -2, "easing": "easeOutQuad" },
+          { "time": 420, "value": -10, "easing": "easeOutQuad" },
+          { "time": 500, "value": 8, "easing": "easeOutCubic" },
+          { "time": 580, "value": -3, "easing": "easeOutQuad" },
           { "time": 700, "value": 0, "easing": "easeOutQuad" }
         ],
-        "rotation": [
+
+        "vertex0_x": [
           { "time": 0, "value": 0 },
-          { "time": 400, "value": 0 },
-          { "time": 450, "value": -0.04, "easing": "easeOutQuad" },
-          { "time": 500, "value": 0.03, "easing": "easeOutQuad" },
-          { "time": 600, "value": -0.02, "easing": "easeOutQuad" },
-          { "time": 700, "value": 0, "easing": "easeOutQuad" },
-          { "time": 750, "value": -0.05, "easing": "easeOutQuad" },
-          { "time": 850, "value": 0.03, "easing": "easeOutQuad" },
-          { "time": 1000, "value": 0, "easing": "easeOutQuad" }
-        ]
-      }
-    },
-    {
-      "id": "eye-glow-l",
-      "type": "graphics",
-      "blendMode": "add",
-      "graphics": { "type": "circle", "cx": 120, "cy": 118, "radius": 14, "fill": { "color": "#00FF44", "alpha": 0.4 } },
-      "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0.3 },
-          { "time": 200, "value": 0.6, "easing": "easeInOutSine" },
-          { "time": 400, "value": 0.3, "easing": "easeInOutSine" },
-          { "time": 700, "value": 1.0, "easing": "easeOutCubic" },
-          { "time": 900, "value": 0.7, "easing": "easeInOutSine" },
-          { "time": 1100, "value": 1.0, "easing": "easeInOutSine" },
-          { "time": 1300, "value": 0.7, "easing": "easeInOutSine" },
-          { "time": 1400, "value": 0.4 },
-          { "time": 1800, "value": 0 }
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": 8, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": -8, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
         ],
-        "scale": [
-          { "time": 0, "value": 0.8 },
-          { "time": 200, "value": 1.2, "easing": "easeInOutSine" },
-          { "time": 400, "value": 0.8, "easing": "easeInOutSine" },
-          { "time": 700, "value": 1.8, "easing": "easeOutCubic" },
-          { "time": 1000, "value": 1.2, "easing": "easeInOutSine" },
-          { "time": 1200, "value": 1.6, "easing": "easeInOutSine" },
-          { "time": 1800, "value": 0.5 }
-        ]
-      }
-    },
-    {
-      "id": "eye-glow-r",
-      "type": "graphics",
-      "blendMode": "add",
-      "graphics": { "type": "circle", "cx": 160, "cy": 118, "radius": 14, "fill": { "color": "#00FF44", "alpha": 0.4 } },
-      "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0.3 },
-          { "time": 200, "value": 0.6, "easing": "easeInOutSine" },
-          { "time": 400, "value": 0.3, "easing": "easeInOutSine" },
-          { "time": 700, "value": 1.0, "easing": "easeOutCubic" },
-          { "time": 900, "value": 0.7, "easing": "easeInOutSine" },
-          { "time": 1100, "value": 1.0, "easing": "easeInOutSine" },
-          { "time": 1300, "value": 0.7, "easing": "easeInOutSine" },
-          { "time": 1400, "value": 0.4 },
-          { "time": 1800, "value": 0 }
-        ],
-        "scale": [
-          { "time": 0, "value": 0.8 },
-          { "time": 200, "value": 1.2, "easing": "easeInOutSine" },
-          { "time": 400, "value": 0.8, "easing": "easeInOutSine" },
-          { "time": 700, "value": 1.8, "easing": "easeOutCubic" },
-          { "time": 1000, "value": 1.2, "easing": "easeInOutSine" },
-          { "time": 1200, "value": 1.6, "easing": "easeInOutSine" },
-          { "time": 1800, "value": 0.5 }
-        ]
-      }
-    },
-    {
-      "id": "crack-flash-1",
-      "type": "graphics",
-      "blendMode": "add",
-      "graphics": { "type": "rect", "x": 130, "y": 60, "width": 3, "height": 120, "fill": { "color": "#00FF88", "alpha": 0.6 } },
-      "startTime": 700, "duration": 400,
-      "keyframes": {
-        "alpha": [
+        "vertex1_x": [
           { "time": 0, "value": 0 },
-          { "time": 30, "value": 0.9, "easing": "easeOutQuad" },
-          { "time": 80, "value": 0, "easing": "easeOutQuad" },
-          { "time": 150, "value": 0.7, "easing": "easeOutQuad" },
-          { "time": 250, "value": 0, "easing": "easeOutQuad" },
-          { "time": 300, "value": 0.5 },
-          { "time": 400, "value": 0 }
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": 5, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": -5, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
         ],
-        "scaleX": [
-          { "time": 0, "value": 1.0 },
-          { "time": 30, "value": 3.0, "easing": "easeOutQuad" },
-          { "time": 80, "value": 0.5 },
-          { "time": 150, "value": 2.5 },
-          { "time": 400, "value": 0.5 }
-        ],
-        "rotation": [
-          { "time": 0, "value": -0.3 },
-          { "time": 400, "value": -0.3 }
-        ]
-      }
-    },
-    {
-      "id": "crack-flash-2",
-      "type": "graphics",
-      "blendMode": "add",
-      "graphics": { "type": "rect", "x": 148, "y": 70, "width": 3, "height": 100, "fill": { "color": "#00FF88", "alpha": 0.6 } },
-      "startTime": 730, "duration": 370,
-      "keyframes": {
-        "alpha": [
+        "vertex2_x": [
           { "time": 0, "value": 0 },
-          { "time": 40, "value": 0.8, "easing": "easeOutQuad" },
-          { "time": 100, "value": 0, "easing": "easeOutQuad" },
-          { "time": 180, "value": 0.6 },
-          { "time": 280, "value": 0 },
-          { "time": 370, "value": 0 }
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": -5, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": 5, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
         ],
-        "scaleX": [
-          { "time": 0, "value": 1.0 },
-          { "time": 40, "value": 2.5, "easing": "easeOutQuad" },
-          { "time": 100, "value": 0.5 },
-          { "time": 180, "value": 2.0 },
-          { "time": 370, "value": 0.5 }
-        ],
-        "rotation": [
-          { "time": 0, "value": 0.25 },
-          { "time": 370, "value": 0.25 }
-        ]
-      }
-    },
-    {
-      "id": "energy-ring",
-      "type": "graphics",
-      "blendMode": "add",
-      "graphics": { "type": "circle", "cx": 140, "cy": 130, "radius": 50, "stroke": { "width": 3, "color": "#00FF44", "alpha": 0.6 } },
-      "startTime": 700, "duration": 500,
-      "keyframes": {
-        "alpha": [
+        "vertex3_x": [
           { "time": 0, "value": 0 },
-          { "time": 60, "value": 0.8, "easing": "easeOutQuad" },
-          { "time": 500, "value": 0 }
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": -8, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": 8, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
         ],
-        "scale": [
-          { "time": 0, "value": 0.3 },
-          { "time": 500, "value": 2.0, "easing": "easeOutCubic" }
+
+        "vertex4_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": 10, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": -10, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "vertex5_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": 6, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": -6, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "vertex6_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": -6, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": 6, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "vertex7_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": -10, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": 10, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+
+        "vertex8_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": 10, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": -10, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "vertex9_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": 6, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": -6, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "vertex10_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": -6, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": 6, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "vertex11_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": -10, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": 10, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+
+        "vertex12_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": 8, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": -8, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "vertex13_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": 5, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": -5, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "vertex14_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": -5, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": 5, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "vertex15_x": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 900, "value": -8, "easing": "easeInOutQuad" },
+          { "time": 1100, "value": 8, "easing": "easeInOutQuad" },
+          { "time": 1300, "value": 0, "easing": "easeInOutQuad" }
         ]
       }
     },
@@ -291,98 +235,202 @@
       "id": "impact-flash",
       "type": "graphics",
       "blendMode": "add",
-      "graphics": { "type": "rect", "x": 0, "y": 0, "width": 280, "height": 280, "fill": { "color": "#00FF44", "alpha": 0.3 } },
-      "startTime": 480, "duration": 200,
+      "graphics": { "type": "rect", "x": 0, "y": 0, "width": 280, "height": 280, "fill": { "color": "#00FF44", "alpha": 0.2 } },
+      "startTime": 490, "duration": 150,
       "keyframes": {
         "alpha": [
           { "time": 0, "value": 0 },
-          { "time": 30, "value": 0.7, "easing": "easeOutQuad" },
-          { "time": 200, "value": 0, "easing": "easeInQuad" }
+          { "time": 20, "value": 0.8, "easing": "easeOutQuad" },
+          { "time": 150, "value": 0, "easing": "easeInCubic" }
         ]
       }
     },
     {
-      "id": "win-ring-2",
+      "id": "energy-ring-1",
       "type": "graphics",
       "blendMode": "add",
-      "graphics": { "type": "circle", "cx": 140, "cy": 130, "radius": 40, "stroke": { "width": 2, "color": "#88FFAA", "alpha": 0.4 } },
-      "startTime": 800, "duration": 500,
+      "graphics": { "type": "circle", "cx": 140, "cy": 128, "radius": 70, "stroke": { "width": 2, "color": "#00FF44", "alpha": 0.5 } },
+      "startTime": 710, "duration": 400,
       "keyframes": {
         "alpha": [
           { "time": 0, "value": 0 },
-          { "time": 80, "value": 0.6, "easing": "easeOutQuad" },
-          { "time": 500, "value": 0 }
+          { "time": 40, "value": 0.7, "easing": "easeOutQuad" },
+          { "time": 400, "value": 0, "easing": "easeInQuad" }
         ],
         "scale": [
-          { "time": 0, "value": 0.5 },
-          { "time": 500, "value": 1.8, "easing": "easeOutCubic" }
+          { "time": 0, "value": 0.2 },
+          { "time": 400, "value": 1.6, "easing": "easeOutCubic" }
         ]
       }
     },
     {
-      "id": "border-flash",
+      "id": "energy-ring-2",
       "type": "graphics",
       "blendMode": "add",
-      "graphics": { "type": "rect", "x": 0, "y": 0, "width": 280, "height": 280, "stroke": { "width": 3, "color": "#00FF44", "alpha": 0.5 } },
-      "startTime": 700, "duration": 400,
+      "graphics": { "type": "circle", "cx": 140, "cy": 128, "radius": 55, "stroke": { "width": 1.5, "color": "#44FF88", "alpha": 0.4 } },
+      "startTime": 760, "duration": 350,
       "keyframes": {
         "alpha": [
           { "time": 0, "value": 0 },
-          { "time": 50, "value": 0.8, "easing": "easeOutQuad" },
-          { "time": 400, "value": 0 }
+          { "time": 50, "value": 0.5, "easing": "easeOutQuad" },
+          { "time": 350, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.3 },
+          { "time": 350, "value": 1.8, "easing": "easeOutCubic" }
+        ]
+      }
+    },
+    {
+      "id": "energy-ring-3",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "circle", "cx": 140, "cy": 128, "radius": 45, "stroke": { "width": 1, "color": "#88FFAA", "alpha": 0.3 } },
+      "startTime": 820, "duration": 300,
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 40, "value": 0.4, "easing": "easeOutQuad" },
+          { "time": 300, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.4 },
+          { "time": 300, "value": 2.0, "easing": "easeOutCubic" }
+        ]
+      }
+    },
+    {
+      "id": "border-glow",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "rect", "x": 2, "y": 2, "width": 276, "height": 276, "stroke": { "width": 2, "color": "#00FF44", "alpha": 0.4 } },
+      "startTime": 700, "duration": 500,
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 40, "value": 0.7, "easing": "easeOutQuad" },
+          { "time": 200, "value": 0.3, "easing": "easeOutQuad" },
+          { "time": 500, "value": 0, "easing": "easeInQuad" }
+        ]
+      }
+    },
+    {
+      "id": "top-streak",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "rect", "x": 0, "y": 0, "width": 280, "height": 2, "fill": { "color": "#00FF44", "alpha": 0.6 } },
+      "startTime": 700, "duration": 300,
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 30, "value": 0.8, "easing": "easeOutQuad" },
+          { "time": 300, "value": 0 }
+        ],
+        "scaleX": [
+          { "time": 0, "value": 0 },
+          { "time": 150, "value": 1.0, "easing": "easeOutCubic" }
+        ]
+      }
+    },
+    {
+      "id": "bot-streak",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "rect", "x": 0, "y": 278, "width": 280, "height": 2, "fill": { "color": "#00FF44", "alpha": 0.6 } },
+      "startTime": 700, "duration": 300,
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 30, "value": 0.8, "easing": "easeOutQuad" },
+          { "time": 300, "value": 0 }
+        ],
+        "scaleX": [
+          { "time": 0, "value": 0 },
+          { "time": 150, "value": 1.0, "easing": "easeOutCubic" }
+        ]
+      }
+    },
+    {
+      "id": "screen-flash",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "rect", "x": 0, "y": 0, "width": 280, "height": 280, "fill": { "color": "#FFFFFF", "alpha": 0.3 } },
+      "startTime": 710, "duration": 120,
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 15, "value": 0.6, "easing": "easeOutQuad" },
+          { "time": 120, "value": 0, "easing": "easeInCubic" }
         ]
       }
     }
   ],
   "particles": [
     {
-      "id": "land-impact",
-      "startTime": 480,
+      "id": "land-dust",
+      "startTime": 490,
       "mode": "burst",
-      "x": 140, "y": 200,
+      "x": 140, "y": 220,
       "config": {
-        "count": 16,
-        "lifetime": 500,
-        "speed": { "min": 3, "max": 8 },
-        "size": { "min": 1, "max": 3 },
+        "count": 12,
+        "lifetime": 400,
+        "speed": { "min": 2, "max": 6 },
+        "size": { "min": 1, "max": 2 },
         "color": "#00FF44",
-        "alpha": { "start": 0.8, "end": 0 },
-        "direction": { "min": 4.0, "max": 5.6 },
-        "gravity": 2,
+        "alpha": { "start": 0.6, "end": 0 },
+        "direction": { "min": 4.2, "max": 5.4 },
+        "gravity": 1.5,
         "blendMode": "add"
       }
     },
     {
-      "id": "win-burst",
-      "startTime": 700,
+      "id": "win-explode",
+      "startTime": 710,
       "mode": "burst",
-      "x": 140, "y": 130,
+      "x": 140, "y": 128,
       "config": {
-        "count": 30,
-        "lifetime": 800,
-        "speed": { "min": 4, "max": 12 },
-        "size": { "min": 1, "max": 4 },
+        "count": 40,
+        "lifetime": 700,
+        "speed": { "min": 5, "max": 14 },
+        "size": { "min": 1, "max": 3 },
         "color": "#00FF44",
         "alpha": { "start": 1, "end": 0 },
         "direction": { "min": 0, "max": 6.283 },
-        "gravity": 1,
+        "gravity": 0.8,
         "blendMode": "add"
       }
     },
     {
-      "id": "ambient-sparks",
-      "startTime": 700,
+      "id": "win-sparks-white",
+      "startTime": 730,
+      "mode": "burst",
+      "x": 140, "y": 128,
+      "config": {
+        "count": 15,
+        "lifetime": 500,
+        "speed": { "min": 3, "max": 10 },
+        "size": { "min": 1, "max": 2 },
+        "color": "#FFFFFF",
+        "alpha": { "start": 0.8, "end": 0 },
+        "direction": { "min": 0, "max": 6.283 },
+        "gravity": 1.2,
+        "blendMode": "add"
+      }
+    },
+    {
+      "id": "ambient-float",
+      "startTime": 800,
       "mode": "continuous",
-      "x": 140, "y": 130,
+      "x": 140, "y": 128,
       "config": {
         "count": 1,
-        "lifetime": 600,
-        "speed": { "min": 0.5, "max": 2 },
+        "lifetime": 800,
+        "speed": { "min": 0.3, "max": 1.5 },
         "size": { "min": 1, "max": 2 },
         "color": "#88FFAA",
-        "alpha": { "start": 0.6, "end": 0 },
+        "alpha": { "start": 0.5, "end": 0 },
         "direction": { "min": 0, "max": 6.283 },
-        "gravity": -0.5,
+        "gravity": -0.4,
         "blendMode": "add"
       }
     }
