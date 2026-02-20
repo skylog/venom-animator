@@ -20,6 +20,8 @@ export class PreviewApp {
   private particleSystems: ParticleSystem[] = [];
   private doc: VanimDocument | null = null;
   private _initialized = false;
+  private _cssWidth = 0;
+  private _cssHeight = 0;
 
   constructor() {
     this.app = new Application();
@@ -27,6 +29,8 @@ export class PreviewApp {
   }
 
   async init(canvas: HTMLCanvasElement, width: number, height: number): Promise<void> {
+    this._cssWidth = width;
+    this._cssHeight = height;
     await this.app.init({
       canvas,
       width,
@@ -111,17 +115,26 @@ export class PreviewApp {
 
   resize(width: number, height: number): void {
     if (!this._initialized) return;
+    this._cssWidth = width;
+    this._cssHeight = height;
     this.app.renderer.resize(width, height);
     this.centerViewport();
   }
 
-  /** Центрирует viewport (сцену) относительно канваса */
+  /** Центрирует и масштабирует viewport чтобы анимация вписалась в канвас */
   private centerViewport(): void {
     if (!this.doc) return;
-    const canvasW = this.app.renderer.width / (this.app.renderer.resolution || 1);
-    const canvasH = this.app.renderer.height / (this.app.renderer.resolution || 1);
-    this.viewport.x = Math.round((canvasW - this.doc.width) / 2);
-    this.viewport.y = Math.round((canvasH - this.doc.height) / 2);
+    const docW = this.doc.width;
+    const docH = this.doc.height;
+    const padding = 20;
+    const availW = this._cssWidth - padding * 2;
+    const availH = this._cssHeight - padding * 2;
+    const scaleX = availW / docW;
+    const scaleY = availH / docH;
+    const fit = Math.min(scaleX, scaleY, 1); // не увеличивать больше 1x
+    this.viewport.scale.set(fit);
+    this.viewport.x = Math.round((this._cssWidth - docW * fit) / 2);
+    this.viewport.y = Math.round((this._cssHeight - docH * fit) / 2);
   }
 
   getRenderedNode(id: string): RenderedNode | undefined {
