@@ -14,6 +14,7 @@ import type { KeyframeProperty, GraphicsNode } from '$lib/types/vanim';
  */
 export class PreviewApp {
   app: Application;
+  private viewport: Container;
   private sceneRoot: Container | null = null;
   private nodeMap = new Map<string, RenderedNode>();
   private particleSystems: ParticleSystem[] = [];
@@ -22,6 +23,7 @@ export class PreviewApp {
 
   constructor() {
     this.app = new Application();
+    this.viewport = new Container();
   }
 
   async init(canvas: HTMLCanvasElement, width: number, height: number): Promise<void> {
@@ -34,6 +36,7 @@ export class PreviewApp {
       resolution: window.devicePixelRatio || 1,
       autoDensity: true,
     });
+    this.app.stage.addChild(this.viewport);
     this._initialized = true;
   }
 
@@ -46,16 +49,17 @@ export class PreviewApp {
     const { root, nodeMap } = await renderNodes(doc);
     this.sceneRoot = root;
     this.nodeMap = nodeMap;
-    this.app.stage.addChild(root);
+    this.viewport.addChild(root);
 
     if (doc.particles) {
       for (const pDef of doc.particles) {
         const system = new ParticleSystem(pDef);
         this.particleSystems.push(system);
-        this.app.stage.addChild(system.container);
+        this.viewport.addChild(system.container);
       }
     }
 
+    this.centerViewport();
     this.renderAtTime(0);
   }
 
@@ -108,6 +112,16 @@ export class PreviewApp {
   resize(width: number, height: number): void {
     if (!this._initialized) return;
     this.app.renderer.resize(width, height);
+    this.centerViewport();
+  }
+
+  /** Центрирует viewport (сцену) относительно канваса */
+  private centerViewport(): void {
+    if (!this.doc) return;
+    const canvasW = this.app.renderer.width / (this.app.renderer.resolution || 1);
+    const canvasH = this.app.renderer.height / (this.app.renderer.resolution || 1);
+    this.viewport.x = Math.round((canvasW - this.doc.width) / 2);
+    this.viewport.y = Math.round((canvasH - this.doc.height) / 2);
   }
 
   getRenderedNode(id: string): RenderedNode | undefined {
@@ -159,7 +173,7 @@ export class PreviewApp {
     this.particleSystems = [];
 
     if (this.sceneRoot) {
-      this.app.stage.removeChild(this.sceneRoot);
+      this.viewport.removeChild(this.sceneRoot);
       this.sceneRoot.destroy({ children: true });
       this.sceneRoot = null;
     }
