@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
     conditions: mode === 'test' ? ['browser'] : [],
   },
   optimizeDeps: {
-    exclude: ['sql.js'],
+    // sql.js нуждается в пре-бандлинге (UMD → ESM)
   },
   test: {
     globals: true,
