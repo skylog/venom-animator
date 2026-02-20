@@ -27,7 +27,7 @@ class HistoryState {
    */
   push(label: string): void {
     const snapshot: Snapshot = {
-      doc: structuredClone(projectState.document),
+      doc: $state.snapshot(projectState.document) as VanimDocument,
       label,
     };
     this.undoStack = [...this.undoStack.slice(-(MAX_HISTORY - 1)), snapshot];
@@ -43,10 +43,10 @@ class HistoryState {
     // Сохраняем текущее для redo
     this.redoStack = [
       ...this.redoStack,
-      { doc: structuredClone(projectState.document), label: snapshot.label },
+      { doc: $state.snapshot(projectState.document) as VanimDocument, label: snapshot.label },
     ];
 
-    projectState.setDocument(structuredClone(snapshot.doc));
+    projectState.setDocument($state.snapshot(snapshot.doc) as VanimDocument);
     projectState.dirty = true;
   }
 
@@ -59,10 +59,10 @@ class HistoryState {
     // Сохраняем текущее для undo
     this.undoStack = [
       ...this.undoStack,
-      { doc: structuredClone(projectState.document), label: snapshot.label },
+      { doc: $state.snapshot(projectState.document) as VanimDocument, label: snapshot.label },
     ];
 
-    projectState.setDocument(structuredClone(snapshot.doc));
+    projectState.setDocument($state.snapshot(snapshot.doc) as VanimDocument);
     projectState.dirty = true;
   }
 
