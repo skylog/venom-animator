@@ -356,13 +356,13 @@ VenomAnimator (редактор)          VenomStrike (игра)
 - Ctrl+V хоткей для paste .vanim
 - **Proof-of-concept:** `static/examples/snake-strike.vanim` (9 нод, 2 системы частиц, 1200ms)
 
-### Фаза 6: Mesh-ноды (деформации спрайтов)
-- `MeshNode` в vanim.ts — вершины (x,y,u,v) + индексы треугольников (уже в типах)
-- Рендеринг через PixiJS 8 `MeshSimple` / `MeshGeometry`
-- Keyframe-анимация вершин: `vertex0_x`, `vertex0_y`, ... (уже в KeyframeProperty)
-- Mesh-редактор в PropertiesPanel: визуальное перетаскивание вершин на канвасе
-- Пресеты mesh-деформаций: wave, bulge, twist, bend
-- Генерация mesh-сетки из прямоугольника (NxM grid)
+### Фаза 6: Mesh-ноды (деформации спрайтов) ✅
+- `MeshNode` в vanim.ts — вершины (x,y,u,v) + индексы треугольников
+- Рендеринг через PixiJS 8 `MeshSimple` в NodeRenderer
+- Keyframe-анимация вершин: `vertex0_x`, `vertex0_y`, ... в VanimPlayer
+- **MeshUtils.ts**: `generateGrid()` + 4 пресета (wave, bulge, twist, bend)
+- **MeshEditor.svelte** в PropertiesPanel: сетка генератор, пресеты, таблица вершин
+- Mesh в HierarchyPanel add menu, валидатор, JSON Schema обновлены
 
 ### Фаза 7: CLI Claude Code интеграция
 Цель: Claude Code CLI может полноценно работать с аниматором — создавать, редактировать, валидировать и управлять .vanim анимациями без GUI.
