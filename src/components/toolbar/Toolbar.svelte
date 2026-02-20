@@ -4,6 +4,7 @@
   import { selectionState } from '$lib/state/selection.svelte';
   import { toastState } from '$lib/state/toast.svelte';
   import { openVanimFile, saveVanimFile, importVanimFromClipboard } from '$lib/io/save-load';
+  import { exportVanimDownload, exportVanimToDirectory } from '$lib/io/export';
 
   function handleNew() {
     if (projectState.dirty && !confirm('Несохранённые изменения будут потеряны. Продолжить?')) {
@@ -48,6 +49,20 @@
     historyState.redo();
   }
 
+  async function handleExport() {
+    try {
+      if ('showSaveFilePicker' in window) {
+        const name = await exportVanimToDirectory(projectState.document);
+        if (name) toastState.success(`Экспортировано: ${name}`);
+      } else {
+        exportVanimDownload(projectState.document);
+        toastState.success(`Экспортировано: ${projectState.document.name}.vanim`);
+      }
+    } catch (e) {
+      toastState.error('Ошибка экспорта', String(e));
+    }
+  }
+
   async function handlePasteVanim() {
     const result = await importVanimFromClipboard();
     if (!result.ok) {
@@ -74,6 +89,9 @@
     </button>
     <button class="tool-btn" onclick={handleSave} title="Сохранить .vanim">
       Сохранить
+    </button>
+    <button class="tool-btn" onclick={handleExport} title="Экспорт .vanim для игры">
+      Export
     </button>
   </div>
 
