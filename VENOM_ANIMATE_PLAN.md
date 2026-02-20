@@ -364,31 +364,18 @@ VenomAnimator (редактор)          VenomStrike (игра)
 - **MeshEditor.svelte** в PropertiesPanel: сетка генератор, пресеты, таблица вершин
 - Mesh в HierarchyPanel add menu, валидатор, JSON Schema обновлены
 
-### Фаза 7: CLI Claude Code интеграция
+### Фаза 7: CLI Claude Code интеграция ✅
 Цель: Claude Code CLI может полноценно работать с аниматором — создавать, редактировать, валидировать и управлять .vanim анимациями без GUI.
 
-- **CLI утилита** `src/cli/vanim-cli.ts` — Node.js скрипт:
-  - `vanim create <name>` — создать новый .vanim из шаблона
-  - `vanim validate <file>` — валидация с actionable-ошибками
-  - `vanim add-node <file> --type sprite --id hero --asset hero.png` — добавить ноду
-  - `vanim add-keyframe <file> --node hero --prop x --time 0 --value 100 --easing easeOutCubic` — добавить кейфрейм
-  - `vanim add-particle <file> --id sparks --mode burst --x 256 --y 256` — добавить частицы
-  - `vanim list-nodes <file>` — показать дерево нод
-  - `vanim info <file>` — показать мета (duration, nodes, particles)
-  - `vanim merge <base> <overlay>` — объединить два .vanim файла
-  - `vanim export <file> --format game` — экспорт в формат игры
-- **CLAUDE.md секция** с инструкциями:
-  - Как Claude Code должен работать с .vanim файлами
-  - Примеры типовых операций (создание анимации с нуля, модификация)
-  - JSON-шаблоны для быстрой генерации
-  - Правила валидации (ссылки на vanim-schema.ts)
-- **Headless preview** `src/cli/vanim-render.ts`:
-  - Рендеринг кадра в PNG через headless PixiJS (для превью в терминале)
-  - `vanim render <file> --time 250 --out frame.png`
-- **MCP Server** (опционально, для продвинутой интеграции):
-  - Claude Code подключает MCP-сервер аниматора
-  - Инструменты: create_animation, add_node, add_keyframe, validate, render_preview
-  - Прямой доступ к SQLite библиотеке (search, save, load)
+Реализовано:
+- **CLI утилита** `src/cli/vanim-cli.ts` (запуск: `npm run vanim -- <cmd>`):
+  - `create`, `validate`, `info`, `list-nodes`, `add-node`, `add-keyframe`, `add-particle`, `merge`
+- **CLAUDE.md** обновлён — CLI инструкции, примеры, команды
+- npm script: `npm run vanim`
+
+Отложено на потом:
+- Headless preview (vanim-render.ts) — требует headless PixiJS, низкий приоритет
+- MCP Server — опционально для продвинутой интеграции
 
 ### Фаза 8: UI тесты (Playwright / Vitest Browser)
 - E2E тесты основных UI-сценариев:
