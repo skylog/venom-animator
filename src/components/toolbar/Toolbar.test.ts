@@ -9,6 +9,7 @@ import { historyState } from '$lib/state/history.svelte';
 vi.mock('$lib/io/save-load', () => ({
   openVanimFile: vi.fn().mockResolvedValue(null),
   saveVanimFile: vi.fn().mockResolvedValue(null),
+  importVanimFromClipboard: vi.fn().mockResolvedValue({ ok: false, errorSummary: 'mock' }),
 }));
 
 describe('Toolbar', () => {
@@ -33,7 +34,8 @@ describe('Toolbar', () => {
 
   it('показывает мета-информацию (duration, size)', () => {
     render(Toolbar);
-    expect(screen.getByText('1000ms | 512x512')).toBeTruthy();
+    expect(screen.getByText('1000ms')).toBeTruthy();
+    expect(screen.getByText('512x512')).toBeTruthy();
   });
 
   it('Undo/Redo отключены без истории', () => {

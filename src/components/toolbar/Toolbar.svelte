@@ -64,6 +64,55 @@
     }
   }
 
+  // Редактирование метаданных документа
+  let editingMeta = $state<'duration' | 'size' | 'name' | null>(null);
+  let metaInputValue = $state('');
+
+  function startEditMeta(field: 'duration' | 'size' | 'name') {
+    editingMeta = field;
+    if (field === 'duration') metaInputValue = String(projectState.document.duration);
+    else if (field === 'size') metaInputValue = `${projectState.document.width}x${projectState.document.height}`;
+    else metaInputValue = projectState.document.name;
+  }
+
+  function commitMeta() {
+    if (!editingMeta) return;
+    const field = editingMeta;
+    editingMeta = null;
+
+    if (field === 'duration') {
+      const val = parseInt(metaInputValue);
+      if (!isNaN(val) && val > 0 && val !== projectState.document.duration) {
+        historyState.push('Edit duration');
+        projectState.updateDocument((doc) => ({ ...doc, duration: val }));
+      }
+    } else if (field === 'size') {
+      const match = metaInputValue.match(/^(\d+)\s*[x×]\s*(\d+)$/);
+      if (match) {
+        const w = parseInt(match[1]);
+        const h = parseInt(match[2]);
+        if (w > 0 && h > 0 && (w !== projectState.document.width || h !== projectState.document.height)) {
+          historyState.push('Edit size');
+          projectState.updateDocument((doc) => ({ ...doc, width: w, height: h }));
+        }
+      }
+    } else if (field === 'name') {
+      const val = metaInputValue.trim();
+      if (val && val !== projectState.document.name) {
+        historyState.push('Edit name');
+        projectState.updateDocument((doc) => ({ ...doc, name: val }));
+      }
+    }
+  }
+
+  function handleMetaKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      commitMeta();
+    } else if (e.key === 'Escape') {
+      editingMeta = null;
+    }
+  }
+
   async function handlePasteVanim() {
     const result = await importVanimFromClipboard();
     if (!result.ok) {
@@ -122,11 +171,60 @@
   </div>
 
   <div class="project-info">
-    <span class="project-name">{projectState.document.name}</span>
+    {#if editingMeta === 'name'}
+      <!-- svelte-ignore a11y_autofocus -->
+      <input
+        class="meta-input name-input"
+        type="text"
+        value={metaInputValue}
+        oninput={(e) => metaInputValue = (e.target as HTMLInputElement).value}
+        onblur={commitMeta}
+        onkeydown={handleMetaKeydown}
+        autofocus
+      />
+    {:else}
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <span class="project-name" ondblclick={() => startEditMeta('name')} title="Двойной клик для редактирования">{projectState.document.name}</span>
+    {/if}
     {#if projectState.dirty}
       <span class="dirty-indicator">*</span>
     {/if}
-    <span class="project-meta">{projectState.document.duration}ms | {projectState.document.width}x{projectState.document.height}</span>
+
+    {#if editingMeta === 'duration'}
+      <!-- svelte-ignore a11y_autofocus -->
+      <input
+        class="meta-input duration-input"
+        type="number"
+        min="1"
+        step="100"
+        value={metaInputValue}
+        oninput={(e) => metaInputValue = (e.target as HTMLInputElement).value}
+        onblur={commitMeta}
+        onkeydown={handleMetaKeydown}
+        autofocus
+      />ms
+    {:else}
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <span class="project-meta editable" ondblclick={() => startEditMeta('duration')} title="Двойной клик для редактирования">{projectState.document.duration}ms</span>
+    {/if}
+
+    <span class="project-meta-sep">|</span>
+
+    {#if editingMeta === 'size'}
+      <!-- svelte-ignore a11y_autofocus -->
+      <input
+        class="meta-input size-input"
+        type="text"
+        value={metaInputValue}
+        oninput={(e) => metaInputValue = (e.target as HTMLInputElement).value}
+        onblur={commitMeta}
+        onkeydown={handleMetaKeydown}
+        autofocus
+      />
+    {:else}
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <span class="project-meta editable" ondblclick={() => startEditMeta('size')} title="Двойной клик для редактирования">{projectState.document.width}x{projectState.document.height}</span>
+    {/if}
   </div>
 </div>
 
@@ -206,5 +304,49 @@
     font-size: 11px;
     color: #666;
     margin-left: 8px;
+  }
+
+  .project-meta.editable {
+    cursor: pointer;
+    border-bottom: 1px dashed transparent;
+  }
+
+  .project-meta.editable:hover {
+    color: #999;
+    border-bottom-color: #555;
+  }
+
+  .project-meta-sep {
+    font-size: 11px;
+    color: #444;
+    margin: 0 2px;
+  }
+
+  .meta-input {
+    background: #2d2d2d;
+    border: 1px solid #007acc;
+    border-radius: 3px;
+    color: #ccc;
+    font-size: 11px;
+    font-family: monospace;
+    padding: 1px 4px;
+    margin-left: 8px;
+  }
+
+  .meta-input:focus {
+    outline: none;
+  }
+
+  .duration-input {
+    width: 60px;
+  }
+
+  .size-input {
+    width: 70px;
+  }
+
+  .name-input {
+    width: 120px;
+    margin-left: 0;
   }
 </style>
