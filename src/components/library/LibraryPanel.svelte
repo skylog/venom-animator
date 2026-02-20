@@ -53,7 +53,7 @@
     const desc = prompt('Описание:', '') ?? '';
     const category = prompt('Категория:', 'effect') ?? 'effect';
 
-    const doc = { ...projectState.document, name };
+    const doc = { ...$state.snapshot(projectState.document), name };
     saveAnimation(doc, desc, category);
     refresh();
   }

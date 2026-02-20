@@ -31,7 +31,8 @@
 
   async function handleSave() {
     try {
-      const name = await saveVanimFile(projectState.document, projectState.filePath ?? undefined);
+      const doc = $state.snapshot(projectState.document);
+      const name = await saveVanimFile(doc, projectState.filePath ?? undefined);
       if (name) {
         projectState.filePath = name;
         projectState.dirty = false;
@@ -52,12 +53,13 @@
 
   async function handleExport() {
     try {
+      const doc = $state.snapshot(projectState.document);
       if ('showSaveFilePicker' in window) {
-        const name = await exportVanimToDirectory(projectState.document);
+        const name = await exportVanimToDirectory(doc);
         if (name) toastState.success(`Экспортировано: ${name}`);
       } else {
-        exportVanimDownload(projectState.document);
-        toastState.success(`Экспортировано: ${projectState.document.name}.vanim`);
+        exportVanimDownload(doc);
+        toastState.success(`Экспортировано: ${doc.name}.vanim`);
       }
     } catch (e) {
       toastState.error('Ошибка экспорта', String(e));
