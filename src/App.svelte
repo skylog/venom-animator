@@ -6,6 +6,7 @@
   import CanvasPanel from './components/canvas/CanvasPanel.svelte';
   import PropertiesPanel from './components/properties/PropertiesPanel.svelte';
   import TimelinePanel from './components/timeline/TimelinePanel.svelte';
+  import Toast from './components/shared/Toast.svelte';
   import { historyState } from '$lib/state/history.svelte';
   import { playbackState } from '$lib/state/playback.svelte';
   import { selectionState } from '$lib/state/selection.svelte';
@@ -95,6 +96,7 @@
       {/snippet}
     </SplitPane>
   </div>
+  <Toast />
 </div>
 
 <style>
