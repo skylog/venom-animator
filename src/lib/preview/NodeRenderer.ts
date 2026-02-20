@@ -1,8 +1,8 @@
-import { Container, Sprite, Graphics, Text, Texture } from 'pixi.js';
+import { Container, Sprite, Graphics, Text, Texture, MeshSimple } from 'pixi.js';
 import type {
   VanimNode, VanimDocument, GraphicsShape,
   LineGraphics, CircleGraphics, RectGraphics, RoundRectGraphics,
-  VanimTextStyle, BlendMode,
+  VanimTextStyle, BlendMode, MeshNode,
 } from '$lib/types/vanim';
 import { loadSpritesheet, loadTexture } from './SpritesheetLoader';
 
@@ -138,7 +138,31 @@ function createDisplayObject(
       if (node.anchorY !== undefined) text.anchor.y = node.anchorY;
       return text;
     }
+
+    case 'mesh': {
+      const meshNode = node as MeshNode;
+      const tex = textures.get(meshNode.asset) ?? Texture.WHITE;
+      const vertices = new Float32Array(meshNode.vertices.length * 2);
+      const uvs = new Float32Array(meshNode.vertices.length * 2);
+      for (let i = 0; i < meshNode.vertices.length; i++) {
+        vertices[i * 2] = meshNode.vertices[i].x;
+        vertices[i * 2 + 1] = meshNode.vertices[i].y;
+        uvs[i * 2] = meshNode.vertices[i].u;
+        uvs[i * 2 + 1] = meshNode.vertices[i].v;
+      }
+      const indices = new Uint32Array(meshNode.indices);
+      const mesh = new MeshSimple({
+        texture: tex,
+        vertices,
+        uvs,
+        indices,
+      });
+      return mesh;
+    }
   }
+
+  // Fallback
+  return new Container();
 }
 
 function applyBaseProperties(obj: Container, node: VanimNode): void {

@@ -1,6 +1,6 @@
-import { Application, Container, Sprite, Graphics, Texture } from 'pixi.js';
+import { Application, Container, Sprite, Graphics, Texture, MeshSimple } from 'pixi.js';
 import type {
-  VanimDocument, VanimNode, KeyframeProperty, GraphicsNode,
+  VanimDocument, VanimNode, KeyframeProperty, GraphicsNode, MeshNode,
 } from '$lib/types/vanim';
 import { renderNodes, drawShape, type RenderedNode } from './NodeRenderer';
 import { evaluateAllKeyframes, getNodeLocalTime } from './KeyframeEvaluator';
@@ -226,8 +226,36 @@ export class VanimPlayer {
         case 'radius': case 'width': case 'height':
           this.applyGraphicsKeyframe(rendered, values);
           return; // Обрабатываем все graphics-keyframes за один вызов
+        default:
+          // Mesh vertex keyframes: vertex0_x, vertex0_y, ...
+          if (typeof prop === 'string' && prop.startsWith('vertex')) {
+            this.applyMeshVertexKeyframes(rendered, values);
+            return; // Обрабатываем все vertex-keyframes за один вызов
+          }
       }
     }
+  }
+
+  private applyMeshVertexKeyframes(
+    rendered: RenderedNode,
+    values: Partial<Record<KeyframeProperty, number | string>>,
+  ): void {
+    if (rendered.node.type !== 'mesh') return;
+    const mesh = rendered.displayObject as MeshSimple;
+    const vertices = mesh.vertices as Float32Array;
+
+    for (const [prop, value] of Object.entries(values)) {
+      if (typeof value !== 'number') continue;
+      const match = prop.match(/^vertex(\d+)_(x|y)$/);
+      if (!match) continue;
+      const idx = parseInt(match[1], 10);
+      const axis = match[2] === 'x' ? 0 : 1;
+      const bufIdx = idx * 2 + axis;
+      if (bufIdx < vertices.length) {
+        vertices[bufIdx] = value;
+      }
+    }
+    mesh.vertices = vertices;
   }
 
   private applyGraphicsKeyframe(
