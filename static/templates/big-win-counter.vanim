@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "name": "big-win-counter",
+  "duration": 5000,
+  "width": 640,
+  "height": 320,
+  "assets": {},
+  "nodes": [
+    {
+      "id": "root",
+      "type": "container",
+      "children": ["bg-rays", "frame", "tier-label", "counter-text", "multiplier-text"]
+    },
+    {
+      "id": "bg-rays",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "circle",
+        "cx": 320,
+        "cy": 160,
+        "radius": 200,
+        "fill": { "color": "#FFD700", "alpha": 0.15 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 500, "value": 0.5, "easing": "easeOutQuad" },
+          { "time": 4000, "value": 0.5 },
+          { "time": 5000, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.5 },
+          { "time": 500, "value": 1.0, "easing": "easeOutQuad" },
+          { "time": 4000, "value": 1.0 },
+          { "time": 5000, "value": 0.5, "easing": "easeInQuad" }
+        ],
+        "rotation": [
+          { "time": 0, "value": 0 },
+          { "time": 5000, "value": 3.14, "easing": "linear" }
+        ]
+      }
+    },
+    {
+      "id": "frame",
+      "type": "graphics",
+      "graphics": {
+        "type": "roundRect",
+        "x": 70,
+        "y": 40,
+        "width": 500,
+        "height": 240,
+        "radius": 24,
+        "fill": { "color": "#0a0a1a", "alpha": 0.9 },
+        "stroke": { "width": 3, "color": "#FFD700", "alpha": 0.8 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 300, "value": 1, "easing": "easeOutCubic" },
+          { "time": 4200, "value": 1 },
+          { "time": 5000, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.6 },
+          { "time": 300, "value": 1.0, "easing": "easeOutBack" },
+          { "time": 4200, "value": 1.0 },
+          { "time": 5000, "value": 0.8, "easing": "easeInQuad" }
+        ]
+      }
+    },
+    {
+      "id": "tier-label",
+      "type": "text",
+      "text": "{{tierLabel}}",
+      "x": 320,
+      "y": 90,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "style": {
+        "fontFamily": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 36,
+        "fill": "#FFD700"
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 400, "value": 1, "easing": "easeOutCubic" },
+          { "time": 4200, "value": 1 },
+          { "time": 5000, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 2.0 },
+          { "time": 400, "value": 1.0, "easing": "easeOutBack" }
+        ]
+      }
+    },
+    {
+      "id": "counter-text",
+      "type": "text",
+      "text": "{{amount}}",
+      "x": 320,
+      "y": 170,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "style": {
+        "fontFamily": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 56,
+        "fill": "#FFFFFF"
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 600, "value": 0 },
+          { "time": 800, "value": 1, "easing": "easeOutCubic" },
+          { "time": 4200, "value": 1 },
+          { "time": 5000, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 600, "value": 0.5 },
+          { "time": 800, "value": 1.0, "easing": "easeOutBack" },
+          { "time": 1500, "value": 1.0 },
+          { "time": 1700, "value": 1.08, "easing": "easeInOutSine" },
+          { "time": 1900, "value": 1.0, "easing": "easeInOutSine" },
+          { "time": 2500, "value": 1.0 },
+          { "time": 2700, "value": 1.06, "easing": "easeInOutSine" },
+          { "time": 2900, "value": 1.0, "easing": "easeInOutSine" }
+        ]
+      }
+    },
+    {
+      "id": "multiplier-text",
+      "type": "text",
+      "text": "x{{multiplier}}",
+      "x": 320,
+      "y": 240,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "style": {
+        "fontFamily": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 24,
+        "fill": "#aaaaaa"
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 1000, "value": 0 },
+          { "time": 1200, "value": 1, "easing": "easeOutCubic" },
+          { "time": 4200, "value": 1 },
+          { "time": 5000, "value": 0, "easing": "easeInQuad" }
+        ]
+      }
+    }
+  ],
+  "particles": [
+    {
+      "id": "coins-burst",
+      "startTime": 700,
+      "mode": "burst",
+      "x": 320,
+      "y": 160,
+      "config": {
+        "count": 30,
+        "lifetime": 1200,
+        "speed": { "min": 3, "max": 9 },
+        "size": { "min": 2, "max": 5 },
+        "color": "#FFD700",
+        "alpha": { "start": 1, "end": 0 },
+        "direction": { "min": 0, "max": 6.283 },
+        "gravity": 1.5,
+        "blendMode": "add"
+      }
+    }
+  ],
+  "states": [
+    { "id": "intro", "label": "Intro", "startTime": 0, "endTime": 800, "color": "#4a9eff" },
+    { "id": "count-up", "label": "Count Up", "startTime": 800, "endTime": 3000, "color": "#ffd700" },
+    { "id": "celebration", "label": "Celebrate", "startTime": 3000, "endTime": 4200, "color": "#ff9f43" },
+    { "id": "dismiss", "label": "Dismiss", "startTime": 4200, "endTime": 5000, "color": "#ff6b6b" }
+  ],
+  "params": {
+    "tierLabel": { "type": "string", "default": "BIG WIN" },
+    "amount": { "type": "string", "default": "$5,000" },
+    "multiplier": { "type": "string", "default": "25" }
+  }
+}
