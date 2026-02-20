@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "name": "Wild Expand",
+  "duration": 2000,
+  "width": 256,
+  "height": 512,
+  "assets": {},
+  "nodes": [
+    {
+      "id": "root",
+      "type": "container",
+      "children": ["expand-glow", "wild-symbol", "wild-text", "border-flash", "shimmer"]
+    },
+    {
+      "id": "expand-glow",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "rect",
+        "x": 0, "y": 0, "width": 256, "height": 512,
+        "fill": { "color": "#9b59b6", "alpha": 0.15 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 400, "value": 0 },
+          { "time": 600, "value": 0.6, "easing": "easeOutQuad" },
+          { "time": 1200, "value": 0.3, "easing": "easeInOutSine" },
+          { "time": 2000, "value": 0.3 }
+        ],
+        "scaleY": [
+          { "time": 0, "value": 0.33 },
+          { "time": 400, "value": 0.33 },
+          { "time": 800, "value": 1.0, "easing": "easeOutCubic" },
+          { "time": 2000, "value": 1.0 }
+        ]
+      }
+    },
+    {
+      "id": "wild-symbol",
+      "type": "graphics",
+      "graphics": {
+        "type": "roundRect",
+        "x": 28, "y": 156, "width": 200, "height": 200, "radius": 16,
+        "fill": { "color": "#9b59b6" },
+        "stroke": { "width": 3, "color": "#c39bd3" }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 1 },
+          { "time": 400, "value": 1 },
+          { "time": 500, "value": 0.8, "easing": "easeOutQuad" },
+          { "time": 2000, "value": 0.8 }
+        ],
+        "scaleY": [
+          { "time": 0, "value": 1.0 },
+          { "time": 200, "value": 1.1, "easing": "easeOutQuad" },
+          { "time": 350, "value": 0.9, "easing": "easeOutQuad" },
+          { "time": 400, "value": 1.0, "easing": "easeOutQuad" },
+          { "time": 800, "value": 2.56, "easing": "easeOutBack" },
+          { "time": 2000, "value": 2.56 }
+        ],
+        "scaleX": [
+          { "time": 0, "value": 1.0 },
+          { "time": 200, "value": 0.9, "easing": "easeOutQuad" },
+          { "time": 350, "value": 1.1, "easing": "easeOutQuad" },
+          { "time": 400, "value": 1.0, "easing": "easeOutQuad" },
+          { "time": 800, "value": 1.28, "easing": "easeOutBack" },
+          { "time": 2000, "value": 1.28 }
+        ]
+      }
+    },
+    {
+      "id": "wild-text",
+      "type": "text",
+      "text": "WILD",
+      "x": 128, "y": 256,
+      "anchorX": 0.5, "anchorY": 0.5,
+      "style": {
+        "fontFamily": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 48,
+        "fill": "#FFFFFF"
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 1 },
+          { "time": 400, "value": 1 },
+          { "time": 600, "value": 1 }
+        ],
+        "scale": [
+          { "time": 0, "value": 1.0 },
+          { "time": 200, "value": 1.1, "easing": "easeOutQuad" },
+          { "time": 400, "value": 1.0, "easing": "easeOutQuad" },
+          { "time": 600, "value": 1.15, "easing": "easeOutBack" },
+          { "time": 2000, "value": 1.15 }
+        ]
+      }
+    },
+    {
+      "id": "border-flash",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "rect",
+        "x": 0, "y": 0, "width": 256, "height": 512,
+        "stroke": { "width": 6, "color": "#FFFFFF", "alpha": 0.5 }
+      },
+      "startTime": 400,
+      "duration": 400,
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 100, "value": 0.8, "easing": "easeOutQuad" },
+          { "time": 400, "value": 0, "easing": "easeInQuad" }
+        ]
+      }
+    },
+    {
+      "id": "shimmer",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "rect",
+        "x": 60, "y": 0, "width": 30, "height": 512,
+        "fill": { "color": "#FFFFFF", "alpha": 0.15 }
+      },
+      "startTime": 900,
+      "duration": 600,
+      "keyframes": {
+        "x": [
+          { "time": 0, "value": -80 },
+          { "time": 600, "value": 300, "easing": "easeInOutQuad" }
+        ],
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 100, "value": 0.5, "easing": "easeOutQuad" },
+          { "time": 500, "value": 0.5 },
+          { "time": 600, "value": 0 }
+        ]
+      }
+    }
+  ],
+  "particles": [
+    {
+      "id": "expand-sparks",
+      "startTime": 400,
+      "mode": "burst",
+      "x": 128, "y": 256,
+      "config": {
+        "count": 30,
+        "lifetime": 800,
+        "speed": { "min": 3, "max": 10 },
+        "size": { "min": 1, "max": 4 },
+        "color": "#c39bd3",
+        "alpha": { "start": 1, "end": 0 },
+        "direction": { "min": 0, "max": 6.283 },
+        "gravity": 0.5,
+        "blendMode": "add"
+      }
+    }
+  ],
+  "states": [
+    { "id": "anticipate", "label": "Anticipate", "startTime": 0, "endTime": 400, "color": "#9b59b6" },
+    { "id": "expand", "label": "Expand", "startTime": 400, "endTime": 900, "color": "#c39bd3" },
+    { "id": "hold", "label": "Hold", "startTime": 900, "endTime": 2000, "color": "#7d3c98" }
+  ],
+  "params": {}
+}

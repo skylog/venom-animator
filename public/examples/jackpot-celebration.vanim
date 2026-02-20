@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "name": "Jackpot Celebration",
+  "duration": 3500,
+  "width": 512,
+  "height": 384,
+  "assets": {},
+  "nodes": [
+    {
+      "id": "root",
+      "type": "container",
+      "children": ["flash-overlay", "rays-bg", "jackpot-frame", "jackpot-text", "amount-text", "ring-left", "ring-right"]
+    },
+    {
+      "id": "flash-overlay",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "rect",
+        "x": 0, "y": 0, "width": 512, "height": 384,
+        "fill": { "color": "#FFFFFF", "alpha": 0.4 }
+      },
+      "startTime": 0,
+      "duration": 500,
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 80, "value": 0.9, "easing": "easeOutQuad" },
+          { "time": 500, "value": 0, "easing": "easeInQuad" }
+        ]
+      }
+    },
+    {
+      "id": "rays-bg",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "circle",
+        "cx": 256, "cy": 192, "radius": 250,
+        "fill": { "color": "#FFD700", "alpha": 0.12 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 400, "value": 0.6, "easing": "easeOutQuad" },
+          { "time": 3000, "value": 0.6 },
+          { "time": 3500, "value": 0, "easing": "easeInQuad" }
+        ],
+        "rotation": [
+          { "time": 0, "value": 0 },
+          { "time": 3500, "value": 6.283, "easing": "linear" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.3 },
+          { "time": 400, "value": 1.1, "easing": "easeOutBack" },
+          { "time": 3000, "value": 1.1 },
+          { "time": 3500, "value": 0.5, "easing": "easeInQuad" }
+        ]
+      }
+    },
+    {
+      "id": "jackpot-frame",
+      "type": "graphics",
+      "graphics": {
+        "type": "roundRect",
+        "x": 56, "y": 72, "width": 400, "height": 240, "radius": 20,
+        "fill": { "color": "#0a0a1a", "alpha": 0.92 },
+        "stroke": { "width": 4, "color": "#FFD700", "alpha": 0.9 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 300, "value": 1, "easing": "easeOutCubic" },
+          { "time": 3000, "value": 1 },
+          { "time": 3500, "value": 0, "easing": "easeInCubic" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.4 },
+          { "time": 300, "value": 1.05, "easing": "easeOutBack" },
+          { "time": 500, "value": 1.0, "easing": "easeInOutQuad" },
+          { "time": 3000, "value": 1.0 },
+          { "time": 3500, "value": 0.85, "easing": "easeInQuad" }
+        ]
+      }
+    },
+    {
+      "id": "jackpot-text",
+      "type": "text",
+      "text": "JACKPOT!",
+      "x": 256, "y": 140,
+      "anchorX": 0.5, "anchorY": 0.5,
+      "style": {
+        "fontFamily": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 48,
+        "fill": "#FFD700"
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 500, "value": 1, "easing": "easeOutCubic" },
+          { "time": 3000, "value": 1 },
+          { "time": 3500, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 3.0 },
+          { "time": 500, "value": 1.0, "easing": "easeOutBack" },
+          { "time": 1200, "value": 1.0 },
+          { "time": 1400, "value": 1.08, "easing": "easeInOutSine" },
+          { "time": 1600, "value": 1.0, "easing": "easeInOutSine" },
+          { "time": 2200, "value": 1.0 },
+          { "time": 2400, "value": 1.06, "easing": "easeInOutSine" },
+          { "time": 2600, "value": 1.0, "easing": "easeInOutSine" }
+        ]
+      }
+    },
+    {
+      "id": "amount-text",
+      "type": "text",
+      "text": "{{amount}}",
+      "x": 256, "y": 230,
+      "anchorX": 0.5, "anchorY": 0.5,
+      "style": {
+        "fontFamily": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 64,
+        "fill": "#FFFFFF"
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 700, "value": 0 },
+          { "time": 1000, "value": 1, "easing": "easeOutCubic" },
+          { "time": 3000, "value": 1 },
+          { "time": 3500, "value": 0, "easing": "easeInQuad" }
+        ],
+        "scale": [
+          { "time": 700, "value": 0.3 },
+          { "time": 1000, "value": 1.0, "easing": "easeOutBack" },
+          { "time": 1500, "value": 1.0 },
+          { "time": 1700, "value": 1.1, "easing": "easeInOutSine" },
+          { "time": 1900, "value": 1.0, "easing": "easeInOutSine" },
+          { "time": 2300, "value": 1.0 },
+          { "time": 2500, "value": 1.08, "easing": "easeInOutSine" },
+          { "time": 2700, "value": 1.0, "easing": "easeInOutSine" }
+        ]
+      }
+    },
+    {
+      "id": "ring-left",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "circle",
+        "cx": 100, "cy": 192, "radius": 40,
+        "stroke": { "width": 2, "color": "#FFD700", "alpha": 0.4 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 600, "value": 0 },
+          { "time": 800, "value": 0.6, "easing": "easeOutQuad" },
+          { "time": 3000, "value": 0.6 },
+          { "time": 3500, "value": 0 }
+        ],
+        "scale": [
+          { "time": 600, "value": 0.5 },
+          { "time": 1200, "value": 1.5, "easing": "easeOutQuad" },
+          { "time": 2400, "value": 0.5, "easing": "easeInOutSine" },
+          { "time": 3000, "value": 1.5, "easing": "easeInOutSine" }
+        ],
+        "rotation": [
+          { "time": 0, "value": 0 },
+          { "time": 3500, "value": -3.14, "easing": "linear" }
+        ]
+      }
+    },
+    {
+      "id": "ring-right",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "circle",
+        "cx": 412, "cy": 192, "radius": 40,
+        "stroke": { "width": 2, "color": "#FFD700", "alpha": 0.4 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 600, "value": 0 },
+          { "time": 800, "value": 0.6, "easing": "easeOutQuad" },
+          { "time": 3000, "value": 0.6 },
+          { "time": 3500, "value": 0 }
+        ],
+        "scale": [
+          { "time": 600, "value": 1.5 },
+          { "time": 1200, "value": 0.5, "easing": "easeOutQuad" },
+          { "time": 2400, "value": 1.5, "easing": "easeInOutSine" },
+          { "time": 3000, "value": 0.5, "easing": "easeInOutSine" }
+        ],
+        "rotation": [
+          { "time": 0, "value": 0 },
+          { "time": 3500, "value": 3.14, "easing": "linear" }
+        ]
+      }
+    }
+  ],
+  "particles": [
+    {
+      "id": "gold-burst",
+      "startTime": 200,
+      "mode": "burst",
+      "x": 256, "y": 192,
+      "config": {
+        "count": 50,
+        "lifetime": 1500,
+        "speed": { "min": 4, "max": 12 },
+        "size": { "min": 2, "max": 6 },
+        "color": "#FFD700",
+        "alpha": { "start": 1, "end": 0 },
+        "direction": { "min": 0, "max": 6.283 },
+        "gravity": 2,
+        "blendMode": "add"
+      }
+    },
+    {
+      "id": "confetti",
+      "startTime": 800,
+      "mode": "continuous",
+      "x": 256, "y": 50,
+      "config": {
+        "count": 3,
+        "lifetime": 2000,
+        "speed": { "min": 1, "max": 4 },
+        "size": { "min": 2, "max": 4 },
+        "color": "#FF6B6B",
+        "alpha": { "start": 0.9, "end": 0 },
+        "direction": { "min": 1.2, "max": 1.9 },
+        "gravity": 0.5,
+        "blendMode": "normal"
+      }
+    }
+  ],
+  "states": [
+    { "id": "flash", "label": "Flash", "startTime": 0, "endTime": 500, "color": "#ffffff" },
+    { "id": "reveal", "label": "Reveal", "startTime": 500, "endTime": 1000, "color": "#FFD700" },
+    { "id": "celebrate", "label": "Celebrate", "startTime": 1000, "endTime": 3000, "color": "#ff9f43" },
+    { "id": "dismiss", "label": "Dismiss", "startTime": 3000, "endTime": 3500, "color": "#ff6b6b" }
+  ],
+  "params": {
+    "amount": { "type": "string", "default": "$50,000" }
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "name": "Button Press",
+  "duration": 800,
+  "width": 200,
+  "height": 80,
+  "assets": {},
+  "nodes": [
+    {
+      "id": "root",
+      "type": "container",
+      "children": ["btn-shadow", "btn-body", "btn-highlight", "btn-label"]
+    },
+    {
+      "id": "btn-shadow",
+      "type": "graphics",
+      "graphics": {
+        "type": "roundRect",
+        "x": 12,
+        "y": 16,
+        "width": 176,
+        "height": 56,
+        "radius": 12,
+        "fill": { "color": "#000000", "alpha": 0.3 }
+      },
+      "keyframes": {
+        "y": [
+          { "time": 0, "value": 0 },
+          { "time": 100, "value": 0 },
+          { "time": 200, "value": -4, "easing": "easeOutQuad" },
+          { "time": 400, "value": 4, "easing": "easeOutQuad" },
+          { "time": 550, "value": -2, "easing": "easeOutQuad" },
+          { "time": 800, "value": 0, "easing": "easeOutQuad" }
+        ],
+        "alpha": [
+          { "time": 0, "value": 0.3 },
+          { "time": 200, "value": 0.4, "easing": "easeOutQuad" },
+          { "time": 400, "value": 0.15, "easing": "easeOutQuad" },
+          { "time": 800, "value": 0.3, "easing": "easeOutQuad" }
+        ]
+      }
+    },
+    {
+      "id": "btn-body",
+      "type": "graphics",
+      "graphics": {
+        "type": "roundRect",
+        "x": 10,
+        "y": 10,
+        "width": 180,
+        "height": 56,
+        "radius": 12,
+        "fill": { "color": "#4a9eff" },
+        "stroke": { "width": 2, "color": "#2b7de9" }
+      },
+      "keyframes": {
+        "scale": [
+          { "time": 0, "value": 1.0 },
+          { "time": 100, "value": 1.0 },
+          { "time": 200, "value": 1.06, "easing": "easeOutQuad" },
+          { "time": 400, "value": 0.95, "easing": "easeOutQuad" },
+          { "time": 550, "value": 1.02, "easing": "easeOutQuad" },
+          { "time": 800, "value": 1.0, "easing": "easeOutQuad" }
+        ],
+        "y": [
+          { "time": 0, "value": 0 },
+          { "time": 200, "value": -3, "easing": "easeOutQuad" },
+          { "time": 400, "value": 3, "easing": "easeOutQuad" },
+          { "time": 800, "value": 0, "easing": "easeOutQuad" }
+        ]
+      }
+    },
+    {
+      "id": "btn-highlight",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "roundRect",
+        "x": 14,
+        "y": 12,
+        "width": 172,
+        "height": 24,
+        "radius": 10,
+        "fill": { "color": "#FFFFFF", "alpha": 0.15 }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0.15 },
+          { "time": 200, "value": 0.4, "easing": "easeOutQuad" },
+          { "time": 400, "value": 0.05, "easing": "easeOutQuad" },
+          { "time": 800, "value": 0.15, "easing": "easeOutQuad" }
+        ],
+        "y": [
+          { "time": 0, "value": 0 },
+          { "time": 200, "value": -3, "easing": "easeOutQuad" },
+          { "time": 400, "value": 3, "easing": "easeOutQuad" },
+          { "time": 800, "value": 0, "easing": "easeOutQuad" }
+        ]
+      }
+    },
+    {
+      "id": "btn-label",
+      "type": "text",
+      "text": "{{label}}",
+      "x": 100,
+      "y": 38,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "style": {
+        "fontFamily": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 18,
+        "fill": "#FFFFFF"
+      },
+      "keyframes": {
+        "scale": [
+          { "time": 0, "value": 1.0 },
+          { "time": 200, "value": 1.06, "easing": "easeOutQuad" },
+          { "time": 400, "value": 0.95, "easing": "easeOutQuad" },
+          { "time": 800, "value": 1.0, "easing": "easeOutQuad" }
+        ],
+        "y": [
+          { "time": 0, "value": 0 },
+          { "time": 200, "value": -3, "easing": "easeOutQuad" },
+          { "time": 400, "value": 3, "easing": "easeOutQuad" },
+          { "time": 800, "value": 0, "easing": "easeOutQuad" }
+        ]
+      }
+    }
+  ],
+  "particles": [],
+  "states": [
+    { "id": "idle", "label": "Idle", "startTime": 0, "endTime": 100, "color": "#4a9eff" },
+    { "id": "hover", "label": "Hover", "startTime": 100, "endTime": 200, "color": "#6bb3ff" },
+    { "id": "press", "label": "Press", "startTime": 200, "endTime": 400, "color": "#2b7de9" },
+    { "id": "release", "label": "Release", "startTime": 400, "endTime": 800, "color": "#4a9eff" }
+  ],
+  "params": {
+    "label": { "type": "string", "default": "SPIN" }
+  }
+}

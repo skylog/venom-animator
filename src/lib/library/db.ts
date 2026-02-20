@@ -100,7 +100,7 @@ export async function initDB(): Promise<Database> {
 
   // При первом запуске загружаем встроенные шаблоны
   if (isFirstRun) {
-    await seedBuiltinTemplates();
+    await seedBuiltinContent();
   }
 
   return db;
@@ -213,7 +213,7 @@ async function loadFromIndexedDB(): Promise<Uint8Array | null> {
   }
 }
 
-// --- Seed встроенных шаблонов ---
+// --- Seed встроенного контента ---
 
 const BUILTIN_TEMPLATES = [
   { name: 'Reel Symbol', category: 'slot-reel', description: 'Иконка на барабане: Idle → Land → Win → Dim', url: '/templates/reel-symbol.vanim' },
@@ -224,23 +224,65 @@ const BUILTIN_TEMPLATES = [
   { name: 'Bonus Meter Fill', category: 'ui', description: 'Прогресс-бар бонуса: Idle → Fill → Complete', url: '/templates/bonus-meter-fill.vanim' },
 ];
 
-async function seedBuiltinTemplates(): Promise<void> {
+const BUILTIN_ANIMATIONS = [
+  { name: 'Coin Spin', category: 'effect', description: 'Вращающаяся монетка с подбрасыванием и бликом', url: '/examples/coin-spin.vanim' },
+  { name: 'Button Press', category: 'ui', description: 'Кнопка с анимацией Idle → Hover → Press → Release', url: '/examples/button-press.vanim' },
+  { name: 'Jackpot Celebration', category: 'popup', description: 'Полноэкранный эффект джекпота с партиклами и конфетти', url: '/examples/jackpot-celebration.vanim' },
+  { name: 'Loading Spinner', category: 'ui', description: 'Лоадер с двумя орбитальными точками', url: '/examples/loading-spinner.vanim' },
+  { name: 'Multiplier Badge', category: 'effect', description: 'Бейдж множителя с пульсацией и свечением', url: '/examples/multiplier-badge.vanim' },
+  { name: 'Wild Expand', category: 'slot-reel', description: 'Расширяющийся Wild символ на весь рил', url: '/examples/wild-expand.vanim' },
+];
+
+const BUILTIN_ASSETS = [
+  { id: 'asset-gold-coin', name: 'Gold Coin', type: 'texture' as const, mime_type: 'image/png', width: 128, height: 128 },
+  { id: 'asset-diamond', name: 'Diamond', type: 'texture' as const, mime_type: 'image/png', width: 96, height: 96 },
+  { id: 'asset-wild-symbol', name: 'Wild Symbol', type: 'texture' as const, mime_type: 'image/png', width: 200, height: 200 },
+  { id: 'asset-star-particle', name: 'Star Particle', type: 'texture' as const, mime_type: 'image/png', width: 32, height: 32 },
+  { id: 'asset-coin-sheet', name: 'Coin Spritesheet', type: 'spritesheet' as const, mime_type: 'image/png', width: 512, height: 128, cols: 8, rows: 2 },
+  { id: 'asset-explosion-sheet', name: 'Explosion Spritesheet', type: 'spritesheet' as const, mime_type: 'image/png', width: 1024, height: 256, cols: 8, rows: 2 },
+  { id: 'asset-ui-button', name: 'UI Button Slice', type: 'texture' as const, mime_type: 'image/png', width: 256, height: 80 },
+];
+
+async function seedBuiltinContent(): Promise<void> {
   if (!db) return;
 
+  // Шаблоны
   for (const tmpl of BUILTIN_TEMPLATES) {
     try {
       const resp = await fetch(tmpl.url);
       if (!resp.ok) continue;
       const json = await resp.text();
       const id = tmpl.name.toLowerCase().replace(/\s+/g, '-');
-
       dbRun(
         `INSERT OR IGNORE INTO templates (id, name, description, category, json) VALUES (?, ?, ?, ?, ?)`,
         [id, tmpl.name, tmpl.description, tmpl.category, json]
       );
-    } catch {
-      // Пропускаем если файл недоступен
-    }
+    } catch { /* skip */ }
+  }
+
+  // Анимации
+  for (const anim of BUILTIN_ANIMATIONS) {
+    try {
+      const resp = await fetch(anim.url);
+      if (!resp.ok) continue;
+      const json = await resp.text();
+      const doc = JSON.parse(json);
+      const id = anim.name.toLowerCase().replace(/\s+/g, '-');
+      dbRun(
+        `INSERT OR IGNORE INTO animations (id, name, description, json, width, height, duration, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [id, anim.name, anim.description, json, doc.width, doc.height, doc.duration, anim.category]
+      );
+    } catch { /* skip */ }
+  }
+
+  // Ассеты (метаданные без blob)
+  for (const asset of BUILTIN_ASSETS) {
+    dbRun(
+      `INSERT OR IGNORE INTO assets (id, name, type, mime_type, width, height, cols, rows) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [asset.id, asset.name, asset.type, asset.mime_type, asset.width, asset.height,
+       'cols' in asset ? (asset as any).cols : null,
+       'rows' in asset ? (asset as any).rows : null]
+    );
   }
 
   await persistDB();
