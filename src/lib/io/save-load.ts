@@ -1,5 +1,5 @@
 import type { VanimDocument } from '$lib/types/vanim';
-import { validateVanim, formatValidationErrors } from '$lib/ai/vanim-validator';
+import { validateVanim, formatValidationErrors, parseAndValidateVanim } from '$lib/ai/vanim-validator';
 
 const VANIM_FILE_TYPES = [
   {
@@ -88,4 +88,50 @@ export async function pasteVanimFromClipboard(): Promise<VanimDocument | null> {
   if (critical.length > 0) return null;
 
   return parsed as VanimDocument;
+}
+
+export interface ImportResult {
+  ok: boolean;
+  document?: VanimDocument;
+  errorSummary?: string;
+  errorDetail?: string;
+}
+
+/**
+ * Импорт .vanim из буфера обмена с детальной валидацией.
+ * Возвращает результат с ошибками для отображения пользователю.
+ */
+export async function importVanimFromClipboard(): Promise<ImportResult> {
+  let text: string;
+  try {
+    text = await navigator.clipboard.readText();
+  } catch {
+    return { ok: false, errorSummary: 'Нет доступа к буферу обмена' };
+  }
+
+  if (!text.trim()) {
+    return { ok: false, errorSummary: 'Буфер обмена пуст' };
+  }
+
+  if (!text.trim().startsWith('{')) {
+    return { ok: false, errorSummary: 'В буфере не JSON' };
+  }
+
+  const result = parseAndValidateVanim(text);
+  if (!result.ok) {
+    const errorCount = result.errors.filter((e) => e.severity === 'error').length;
+    const warnCount = result.errors.filter((e) => e.severity === 'warning').length;
+    const detail = result.errors
+      .slice(0, 5)
+      .map((e) => `${e.path}: ${e.message}`)
+      .join('\n');
+    console.warn('Validation errors:', formatValidationErrors(result.errors));
+    return {
+      ok: false,
+      errorSummary: `Невалидный .vanim: ${errorCount} ошибок, ${warnCount} предупреждений`,
+      errorDetail: detail,
+    };
+  }
+
+  return { ok: true, document: result.document };
 }

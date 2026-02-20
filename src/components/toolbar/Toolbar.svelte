@@ -2,7 +2,8 @@
   import { projectState } from '$lib/state/project.svelte';
   import { historyState } from '$lib/state/history.svelte';
   import { selectionState } from '$lib/state/selection.svelte';
-  import { openVanimFile, saveVanimFile } from '$lib/io/save-load';
+  import { toastState } from '$lib/state/toast.svelte';
+  import { openVanimFile, saveVanimFile, importVanimFromClipboard } from '$lib/io/save-load';
 
   function handleNew() {
     if (projectState.dirty && !confirm('Несохранённые изменения будут потеряны. Продолжить?')) {
@@ -20,8 +21,9 @@
       projectState.setDocument(result.doc, result.fileName);
       selectionState.clear();
       historyState.clear();
+      toastState.success(`Открыто: "${result.fileName}"`);
     } catch (e) {
-      alert(String(e));
+      toastState.error('Ошибка открытия файла', String(e));
     }
   }
 
@@ -31,9 +33,10 @@
       if (name) {
         projectState.filePath = name;
         projectState.dirty = false;
+        toastState.success(`Сохранено: ${name}`);
       }
     } catch (e) {
-      alert(String(e));
+      toastState.error('Ошибка сохранения', String(e));
     }
   }
 
@@ -46,17 +49,18 @@
   }
 
   async function handlePasteVanim() {
-    try {
-      const text = await navigator.clipboard.readText();
-      const doc = JSON.parse(text);
-      if (doc.version && doc.nodes) {
-        projectState.setDocument(doc);
-        selectionState.clear();
-        historyState.clear();
-      }
-    } catch {
-      // не .vanim в буфере
+    const result = await importVanimFromClipboard();
+    if (!result.ok) {
+      toastState.error(result.errorSummary!, result.errorDetail);
+      return;
     }
+    projectState.setDocument(result.document!);
+    selectionState.clear();
+    historyState.clear();
+    toastState.success(
+      `Загружено: "${result.document!.name}"`,
+      `${result.document!.nodes.length} нод, ${result.document!.duration}ms`,
+    );
   }
 </script>
 

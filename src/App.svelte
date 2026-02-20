@@ -11,7 +11,8 @@
   import { playbackState } from '$lib/state/playback.svelte';
   import { selectionState } from '$lib/state/selection.svelte';
   import { projectState } from '$lib/state/project.svelte';
-  import { openVanimFile, saveVanimFile } from '$lib/io/save-load';
+  import { openVanimFile, saveVanimFile, importVanimFromClipboard } from '$lib/io/save-load';
+  import { toastState } from '$lib/state/toast.svelte';
 
   type LeftTab = 'hierarchy' | 'library';
   let leftTab = $state<LeftTab>('hierarchy');
@@ -45,6 +46,21 @@
     } else if (e.key === ' ') {
       e.preventDefault();
       playbackState.togglePlay();
+    } else if (ctrl && e.key === 'v') {
+      e.preventDefault();
+      importVanimFromClipboard().then((result) => {
+        if (result.ok) {
+          projectState.setDocument(result.document!);
+          selectionState.clear();
+          historyState.clear();
+          toastState.success(
+            `Загружено: "${result.document!.name}"`,
+            `${result.document!.nodes.length} нод, ${result.document!.duration}ms`,
+          );
+        } else if (result.errorSummary !== 'В буфере не JSON') {
+          toastState.error(result.errorSummary!, result.errorDetail);
+        }
+      });
     } else if (e.key === 'Delete' || e.key === 'Backspace') {
       if (selectionState.nodeId && selectionState.nodeId !== 'root') {
         historyState.push(`Delete ${selectionState.nodeId}`);
