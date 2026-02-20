@@ -377,17 +377,21 @@ VenomAnimator (редактор)          VenomStrike (игра)
 - Headless preview (vanim-render.ts) — требует headless PixiJS, низкий приоритет
 - MCP Server — опционально для продвинутой интеграции
 
-### Фаза 8: UI тесты (Playwright / Vitest Browser)
-- E2E тесты основных UI-сценариев:
-  - Создание/удаление нод через Hierarchy
-  - Переключение табов (Hierarchy ↔ Library)
-  - Редактирование свойств в PropertiesPanel
-  - Drag keyframes на таймлайне
-  - Save/Load через Toolbar
-  - Библиотека: сохранение и загрузка анимаций
-  - Playback: Play/Pause/Stop
-- Component тесты (Vitest + @testing-library/svelte):
-  - Каждый компонент: рендерится, реагирует на клики, обновляет стейт
+### Фаза 8: UI тесты ✅
+Реализовано:
+- **Vitest config** — happy-dom + resolve.conditions: ['browser'] + svelteTesting() plugin
+- **Fix**: history.svelte.ts — $state.snapshot вместо structuredClone для proxy
+- **Component тесты** (Vitest + @testing-library/svelte):
+  - HierarchyPanel (15 тестов): рендер, add node types, delete, tab switching
+  - LibraryPanel (6 тестов): рендер, поиск, пустое состояние
+  - PropertiesPanel (8 тестов): рендер, выбор ноды, input свойств
+  - PlaybackControls (6 тестов): Play/Pause/Stop/Loop, время
+  - Toolbar (7 тестов): кнопки, Undo/Redo, dirty indicator
+  - animation-scenarios (31 тест): все типы нод, частицы, undo/redo, selection, документ
+- **Итого: 147 тестов, 10 файлов — все проходят**
+
+Отложено:
+- E2E тесты Playwright — потребуют отдельной настройки, низкий приоритет
 
 ---
 
