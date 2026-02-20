@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "name": "slot-symbol-4state",
+  "duration": 1400,
+  "width": 256,
+  "height": 256,
+  "assets": {},
+  "nodes": [
+    {
+      "id": "root",
+      "type": "container",
+      "children": ["symbol-flash", "win-frame", "symbol"]
+    },
+    {
+      "id": "symbol-flash",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": {
+        "type": "circle",
+        "cx": 128,
+        "cy": 128,
+        "radius": 70,
+        "fill": { "color": "#FFFFFF", "alpha": 0.5 }
+      },
+      "startTime": 400,
+      "duration": 250,
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 80, "value": 0.4, "easing": "easeOutQuad" },
+          { "time": 250, "value": 0 }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.5 },
+          { "time": 250, "value": 1.5, "easing": "easeOutQuad" }
+        ]
+      }
+    },
+    {
+      "id": "win-frame",
+      "type": "graphics",
+      "graphics": {
+        "type": "roundRect",
+        "x": 48,
+        "y": 48,
+        "width": 160,
+        "height": 160,
+        "radius": 14,
+        "fill": { "color": "#FFD700", "alpha": 0.08 },
+        "stroke": { "width": 3, "color": "#FFD700", "alpha": 0.9 }
+      },
+      "startTime": 650,
+      "duration": 550,
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 0 },
+          { "time": 80, "value": 1, "easing": "easeOutCubic" },
+          { "time": 200, "value": 0.7 },
+          { "time": 320, "value": 1, "easing": "easeInOutSine" },
+          { "time": 550, "value": 0, "easing": "easeInOutQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 0.9 },
+          { "time": 120, "value": 1.0, "easing": "easeOutQuad" }
+        ]
+      }
+    },
+    {
+      "id": "symbol",
+      "type": "graphics",
+      "graphics": {
+        "type": "circle",
+        "cx": 128,
+        "cy": 128,
+        "radius": 45,
+        "fill": { "color": "#FFD700" }
+      },
+      "keyframes": {
+        "alpha": [
+          { "time": 0, "value": 1 },
+          { "time": 1100, "value": 1 },
+          { "time": 1400, "value": 0.6, "easing": "easeInOutQuad" }
+        ],
+        "scale": [
+          { "time": 0, "value": 1.0 },
+          { "time": 200, "value": 1.02, "easing": "easeInOutSine" },
+          { "time": 400, "value": 1.0, "easing": "easeInOutSine" },
+          { "time": 430, "value": 0.92, "easing": "easeOutQuad" },
+          { "time": 520, "value": 1.06, "easing": "easeOutBack" },
+          { "time": 640, "value": 1.0, "easing": "easeInOutQuad" },
+          { "time": 770, "value": 1.15, "easing": "easeOutQuad" },
+          { "time": 870, "value": 1.0, "easing": "easeInOutQuad" },
+          { "time": 970, "value": 1.12, "easing": "easeOutQuad" },
+          { "time": 1070, "value": 1.0, "easing": "easeInOutQuad" },
+          { "time": 1400, "value": 1.0 }
+        ],
+        "y": [
+          { "time": 0, "value": 0 },
+          { "time": 400, "value": 0 },
+          { "time": 440, "value": 8, "easing": "easeOutQuad" },
+          { "time": 560, "value": 0, "easing": "easeOutBack" },
+          { "time": 1400, "value": 0 }
+        ],
+        "rotation": [
+          { "time": 0, "value": 0 },
+          { "time": 650, "value": 0 },
+          { "time": 720, "value": 0.05, "easing": "easeInOutSine" },
+          { "time": 800, "value": -0.05, "easing": "easeInOutSine" },
+          { "time": 880, "value": 0.04, "easing": "easeInOutSine" },
+          { "time": 950, "value": -0.03, "easing": "easeInOutSine" },
+          { "time": 1020, "value": 0, "easing": "easeInOutSine" },
+          { "time": 1400, "value": 0 }
+        ]
+      }
+    }
+  ],
+  "particles": [
+    {
+      "id": "win-sparks",
+      "startTime": 680,
+      "mode": "burst",
+      "x": 128,
+      "y": 128,
+      "config": {
+        "count": 18,
+        "lifetime": 500,
+        "speed": { "min": 2, "max": 7 },
+        "size": { "min": 1, "max": 3 },
+        "color": "#FFD700",
+        "alpha": { "start": 1, "end": 0 },
+        "direction": { "min": 0, "max": 6.283 },
+        "gravity": 0,
+        "blendMode": "add"
+      }
+    }
+  ],
+  "params": {}
+}
