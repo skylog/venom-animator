@@ -1,167 +1,133 @@
 {
   "version": 1,
-  "name": "Multiplier Badge",
-  "duration": 1600,
-  "width": 160,
-  "height": 160,
+  "name": "Multiplier Pop",
+  "duration": 2000,
+  "width": 200,
+  "height": 200,
   "assets": {},
   "nodes": [
     {
       "id": "root",
       "type": "container",
-      "children": ["outer-ring", "inner-glow", "badge-bg", "mult-text", "x-label"]
+      "children": ["bg-dim", "burst-ring-3", "burst-ring-2", "burst-ring-1", "badge-shadow", "badge-outer", "badge-face", "badge-inner-ring", "badge-shine", "value-text", "label-text", "top-flare"]
     },
     {
-      "id": "outer-ring",
+      "id": "bg-dim",
+      "type": "graphics",
+      "graphics": { "type": "rect", "x": 0, "y": 0, "width": 200, "height": 200, "fill": { "color": "#000000", "alpha": 0.5 } },
+      "keyframes": { "alpha": [ { "time": 0, "value": 0 }, { "time": 200, "value": 0.5, "easing": "easeOutQuad" }, { "time": 1600, "value": 0.5 }, { "time": 2000, "value": 0, "easing": "easeInQuad" } ] }
+    },
+    {
+      "id": "burst-ring-3",
       "type": "graphics",
       "blendMode": "add",
-      "graphics": {
-        "type": "circle",
-        "cx": 80, "cy": 80, "radius": 65,
-        "stroke": { "width": 2, "color": "#ff9f43", "alpha": 0.5 }
-      },
-      "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0 },
-          { "time": 200, "value": 0 },
-          { "time": 400, "value": 0.7, "easing": "easeOutQuad" },
-          { "time": 1600, "value": 0.7 }
-        ],
-        "scale": [
-          { "time": 200, "value": 0.5 },
-          { "time": 400, "value": 1.0, "easing": "easeOutBack" },
-          { "time": 900, "value": 1.0 },
-          { "time": 1100, "value": 1.08, "easing": "easeInOutSine" },
-          { "time": 1300, "value": 1.0, "easing": "easeInOutSine" }
-        ],
-        "rotation": [
-          { "time": 0, "value": 0 },
-          { "time": 1600, "value": 1.57, "easing": "linear" }
-        ]
-      }
+      "graphics": { "type": "circle", "cx": 100, "cy": 95, "radius": 70, "stroke": { "width": 2, "color": "#ff9f43", "alpha": 0.2 } },
+      "startTime": 100, "duration": 600,
+      "keyframes": { "alpha": [ { "time": 0, "value": 0 }, { "time": 100, "value": 0.5, "easing": "easeOutQuad" }, { "time": 600, "value": 0 } ], "scale": [ { "time": 0, "value": 0.3 }, { "time": 600, "value": 1.5, "easing": "easeOutQuad" } ] }
     },
     {
-      "id": "inner-glow",
+      "id": "burst-ring-2",
       "type": "graphics",
       "blendMode": "add",
-      "graphics": {
-        "type": "circle",
-        "cx": 80, "cy": 80, "radius": 50,
-        "fill": { "color": "#ff9f43", "alpha": 0.15 }
-      },
-      "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0 },
-          { "time": 300, "value": 0.5, "easing": "easeOutQuad" },
-          { "time": 900, "value": 0.5 },
-          { "time": 1100, "value": 0.8, "easing": "easeInOutSine" },
-          { "time": 1300, "value": 0.5, "easing": "easeInOutSine" }
-        ],
-        "scale": [
-          { "time": 0, "value": 0.3 },
-          { "time": 300, "value": 1.0, "easing": "easeOutQuad" },
-          { "time": 900, "value": 1.0 },
-          { "time": 1100, "value": 1.1, "easing": "easeInOutSine" },
-          { "time": 1300, "value": 1.0, "easing": "easeInOutSine" }
-        ]
-      }
+      "graphics": { "type": "circle", "cx": 100, "cy": 95, "radius": 55, "stroke": { "width": 3, "color": "#ff6b35", "alpha": 0.3 } },
+      "startTime": 150, "duration": 500,
+      "keyframes": { "alpha": [ { "time": 0, "value": 0 }, { "time": 80, "value": 0.6, "easing": "easeOutQuad" }, { "time": 500, "value": 0 } ], "scale": [ { "time": 0, "value": 0.3 }, { "time": 500, "value": 1.4, "easing": "easeOutQuad" } ] }
     },
     {
-      "id": "badge-bg",
+      "id": "burst-ring-1",
       "type": "graphics",
-      "graphics": {
-        "type": "circle",
-        "cx": 80, "cy": 80, "radius": 45,
-        "fill": { "color": "#1a0a00", "alpha": 0.9 },
-        "stroke": { "width": 3, "color": "#ff9f43" }
-      },
+      "blendMode": "add",
+      "graphics": { "type": "circle", "cx": 100, "cy": 95, "radius": 40, "stroke": { "width": 4, "color": "#FFD700", "alpha": 0.4 } },
+      "startTime": 200, "duration": 400,
+      "keyframes": { "alpha": [ { "time": 0, "value": 0 }, { "time": 60, "value": 0.7, "easing": "easeOutQuad" }, { "time": 400, "value": 0 } ], "scale": [ { "time": 0, "value": 0.4 }, { "time": 400, "value": 1.3, "easing": "easeOutQuad" } ] }
+    },
+    {
+      "id": "badge-shadow",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 100, "cy": 100, "radius": 52, "fill": { "color": "#000000", "alpha": 0.4 } },
+      "keyframes": { "alpha": [ { "time": 0, "value": 0 }, { "time": 200, "value": 0.4, "easing": "easeOutCubic" }, { "time": 1600, "value": 0.4 }, { "time": 2000, "value": 0 } ], "scale": [ { "time": 0, "value": 0.1 }, { "time": 200, "value": 1.02, "easing": "easeOutBack" }, { "time": 400, "value": 1.0 } ] }
+    },
+    {
+      "id": "badge-outer",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 100, "cy": 95, "radius": 52, "fill": { "color": "#1a0a00" }, "stroke": { "width": 3, "color": "#ff9f43" } },
       "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0 },
-          { "time": 200, "value": 1, "easing": "easeOutCubic" },
-          { "time": 1600, "value": 1 }
-        ],
-        "scale": [
-          { "time": 0, "value": 0.3 },
-          { "time": 200, "value": 1.1, "easing": "easeOutBack" },
-          { "time": 350, "value": 1.0, "easing": "easeInOutQuad" },
-          { "time": 900, "value": 1.0 },
-          { "time": 1100, "value": 1.06, "easing": "easeInOutSine" },
-          { "time": 1300, "value": 1.0, "easing": "easeInOutSine" }
-        ]
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 200, "value": 1, "easing": "easeOutCubic" }, { "time": 1600, "value": 1 }, { "time": 2000, "value": 0, "easing": "easeInQuad" } ],
+        "scale": [ { "time": 0, "value": 0.1 }, { "time": 200, "value": 1.08, "easing": "easeOutBack" }, { "time": 400, "value": 1.0, "easing": "easeInOutQuad" }, { "time": 1000, "value": 1.0 }, { "time": 1200, "value": 1.04, "easing": "easeInOutSine" }, { "time": 1400, "value": 1.0, "easing": "easeInOutSine" } ]
       }
     },
     {
-      "id": "mult-text",
+      "id": "badge-face",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 100, "cy": 95, "radius": 46, "fill": { "color": "#2d1400", "alpha": 0.9 } },
+      "keyframes": {
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 200, "value": 1 }, { "time": 1600, "value": 1 }, { "time": 2000, "value": 0 } ],
+        "scale": [ { "time": 0, "value": 0.1 }, { "time": 200, "value": 1.08, "easing": "easeOutBack" }, { "time": 400, "value": 1.0, "easing": "easeInOutQuad" }, { "time": 1000, "value": 1.0 }, { "time": 1200, "value": 1.04, "easing": "easeInOutSine" }, { "time": 1400, "value": 1.0, "easing": "easeInOutSine" } ]
+      }
+    },
+    {
+      "id": "badge-inner-ring",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "circle", "cx": 100, "cy": 95, "radius": 38, "stroke": { "width": 1, "color": "#ff9f43", "alpha": 0.3 } },
+      "keyframes": {
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 300, "value": 0.4, "easing": "easeOutQuad" }, { "time": 1600, "value": 0.4 }, { "time": 2000, "value": 0 } ],
+        "scale": [ { "time": 0, "value": 0.1 }, { "time": 300, "value": 1.0, "easing": "easeOutBack" }, { "time": 1000, "value": 1.0 }, { "time": 1200, "value": 1.04, "easing": "easeInOutSine" }, { "time": 1400, "value": 1.0, "easing": "easeInOutSine" } ],
+        "rotation": [ { "time": 0, "value": 0 }, { "time": 2000, "value": 1.57, "easing": "linear" } ]
+      }
+    },
+    {
+      "id": "badge-shine",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "circle", "cx": 88, "cy": 80, "radius": 18, "fill": { "color": "#FFFFFF", "alpha": 0.15 } },
+      "keyframes": {
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 300, "value": 0 }, { "time": 500, "value": 0.3, "easing": "easeOutQuad" }, { "time": 1000, "value": 0.15, "easing": "easeInOutSine" }, { "time": 1500, "value": 0.3, "easing": "easeInOutSine" }, { "time": 2000, "value": 0 } ]
+      }
+    },
+    {
+      "id": "value-text",
       "type": "text",
       "text": "{{value}}",
-      "x": 80, "y": 72,
-      "anchorX": 0.5, "anchorY": 0.5,
-      "style": {
-        "fontFamily": "Arial",
-        "fontWeight": "bold",
-        "fontSize": 42,
-        "fill": "#ff9f43"
-      },
+      "x": 100, "y": 88, "anchorX": 0.5, "anchorY": 0.5,
+      "style": { "fontFamily": "Arial", "fontWeight": "bold", "fontSize": 46, "fill": "#ff9f43" },
       "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0 },
-          { "time": 300, "value": 0 },
-          { "time": 500, "value": 1, "easing": "easeOutCubic" }
-        ],
-        "scale": [
-          { "time": 300, "value": 2.5 },
-          { "time": 500, "value": 1.0, "easing": "easeOutBack" },
-          { "time": 900, "value": 1.0 },
-          { "time": 1100, "value": 1.15, "easing": "easeInOutSine" },
-          { "time": 1300, "value": 1.0, "easing": "easeInOutSine" }
-        ]
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 300, "value": 0 }, { "time": 500, "value": 1, "easing": "easeOutCubic" }, { "time": 1600, "value": 1 }, { "time": 2000, "value": 0 } ],
+        "scale": [ { "time": 300, "value": 3.0 }, { "time": 500, "value": 1.0, "easing": "easeOutBack" }, { "time": 1000, "value": 1.0 }, { "time": 1200, "value": 1.12, "easing": "easeInOutSine" }, { "time": 1400, "value": 1.0, "easing": "easeInOutSine" } ]
       }
     },
     {
-      "id": "x-label",
+      "id": "label-text",
       "type": "text",
       "text": "MULTIPLIER",
-      "x": 80, "y": 105,
-      "anchorX": 0.5, "anchorY": 0.5,
-      "style": {
-        "fontFamily": "Arial",
-        "fontWeight": "bold",
-        "fontSize": 10,
-        "fill": "#ffcc80"
-      },
+      "x": 100, "y": 120, "anchorX": 0.5, "anchorY": 0.5,
+      "style": { "fontFamily": "Arial", "fontWeight": "bold", "fontSize": 11, "fill": "#ffcc80" },
       "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0 },
-          { "time": 500, "value": 0 },
-          { "time": 700, "value": 1, "easing": "easeOutCubic" }
-        ]
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 500, "value": 0 }, { "time": 700, "value": 1, "easing": "easeOutCubic" }, { "time": 1600, "value": 1 }, { "time": 2000, "value": 0 } ],
+        "y": [ { "time": 500, "value": 8 }, { "time": 700, "value": 0, "easing": "easeOutQuad" } ]
+      }
+    },
+    {
+      "id": "top-flare",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "ellipse", "cx": 100, "cy": 50, "rx": 40, "ry": 6, "fill": { "color": "#ff9f43", "alpha": 0.3 } },
+      "startTime": 200, "duration": 500,
+      "keyframes": {
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 100, "value": 0.5, "easing": "easeOutQuad" }, { "time": 500, "value": 0 } ],
+        "scaleX": [ { "time": 0, "value": 0.3 }, { "time": 500, "value": 2.0, "easing": "easeOutQuad" } ],
+        "y": [ { "time": 0, "value": 0 }, { "time": 500, "value": -15, "easing": "easeOutQuad" } ]
       }
     }
   ],
   "particles": [
-    {
-      "id": "appear-sparks",
-      "startTime": 150,
-      "mode": "burst",
-      "x": 80, "y": 80,
-      "config": {
-        "count": 16,
-        "lifetime": 600,
-        "speed": { "min": 3, "max": 8 },
-        "size": { "min": 1, "max": 3 },
-        "color": "#ff9f43",
-        "alpha": { "start": 1, "end": 0 },
-        "direction": { "min": 0, "max": 6.283 },
-        "gravity": 0,
-        "blendMode": "add"
-      }
-    }
+    { "id": "pop-sparks", "startTime": 150, "mode": "burst", "x": 100, "y": 95, "config": { "count": 24, "lifetime": 700, "speed": { "min": 4, "max": 10 }, "size": { "min": 1, "max": 3 }, "color": "#ff9f43", "alpha": { "start": 1, "end": 0 }, "direction": { "min": 0, "max": 6.283 }, "gravity": 1, "blendMode": "add" } }
   ],
   "states": [
-    { "id": "appear", "label": "Appear", "startTime": 0, "endTime": 500, "color": "#ff9f43" },
-    { "id": "reveal", "label": "Reveal", "startTime": 500, "endTime": 900, "color": "#ffcc80" },
-    { "id": "pulse", "label": "Pulse", "startTime": 900, "endTime": 1600, "color": "#ff6b35" }
+    { "id": "pop-in", "label": "Pop In", "startTime": 0, "endTime": 500, "color": "#ff9f43" },
+    { "id": "reveal", "label": "Reveal", "startTime": 500, "endTime": 1000, "color": "#ffcc80" },
+    { "id": "pulse", "label": "Pulse", "startTime": 1000, "endTime": 1600, "color": "#ff6b35" },
+    { "id": "dismiss", "label": "Dismiss", "startTime": 1600, "endTime": 2000, "color": "#888888" }
   ],
   "params": {
     "value": { "type": "string", "default": "x5" }

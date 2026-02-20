@@ -1,132 +1,155 @@
 {
   "version": 1,
-  "name": "Coin Spin",
-  "duration": 1200,
-  "width": 128,
-  "height": 128,
+  "name": "Coin Cascade",
+  "duration": 2400,
+  "width": 320,
+  "height": 400,
   "assets": {},
   "nodes": [
     {
       "id": "root",
       "type": "container",
-      "children": ["coin-shadow", "coin-body", "coin-shine"]
+      "children": ["bg-vignette", "coin-far-1", "coin-far-2", "coin-mid-1", "coin-mid-2", "coin-near-1", "coin-near-2", "coin-hero", "coin-hero-rim", "coin-hero-shine", "coin-hero-symbol", "glow-pool"]
     },
     {
-      "id": "coin-shadow",
+      "id": "bg-vignette",
       "type": "graphics",
-      "graphics": {
-        "type": "ellipse",
-        "cx": 64,
-        "cy": 110,
-        "rx": 30,
-        "ry": 8,
-        "fill": { "color": "#000000", "alpha": 0.3 }
-      },
+      "graphics": { "type": "rect", "x": 0, "y": 0, "width": 320, "height": 400, "fill": { "color": "#0a0a1a", "alpha": 0.6 } },
       "keyframes": {
-        "scaleX": [
-          { "time": 0, "value": 1.0 },
-          { "time": 300, "value": 0.6, "easing": "easeInOutSine" },
-          { "time": 600, "value": 1.0, "easing": "easeInOutSine" },
-          { "time": 900, "value": 0.6, "easing": "easeInOutSine" },
-          { "time": 1200, "value": 1.0, "easing": "easeInOutSine" }
-        ],
         "alpha": [
-          { "time": 0, "value": 0.3 },
-          { "time": 300, "value": 0.15, "easing": "easeInOutSine" },
-          { "time": 600, "value": 0.3, "easing": "easeInOutSine" },
-          { "time": 900, "value": 0.15, "easing": "easeInOutSine" },
-          { "time": 1200, "value": 0.3, "easing": "easeInOutSine" }
-        ]
-      }
-    },
-    {
-      "id": "coin-body",
-      "type": "graphics",
-      "graphics": {
-        "type": "circle",
-        "cx": 64,
-        "cy": 56,
-        "radius": 40,
-        "fill": { "color": "#FFD700" },
-        "stroke": { "width": 3, "color": "#DAA520" }
-      },
-      "keyframes": {
-        "scaleX": [
-          { "time": 0, "value": 1.0 },
-          { "time": 150, "value": 0.1, "easing": "easeInQuad" },
-          { "time": 300, "value": -1.0, "easing": "easeOutQuad" },
-          { "time": 450, "value": -0.1, "easing": "easeInQuad" },
-          { "time": 600, "value": 1.0, "easing": "easeOutQuad" },
-          { "time": 750, "value": 0.1, "easing": "easeInQuad" },
-          { "time": 900, "value": -1.0, "easing": "easeOutQuad" },
-          { "time": 1050, "value": -0.1, "easing": "easeInQuad" },
-          { "time": 1200, "value": 1.0, "easing": "easeOutQuad" }
-        ],
-        "y": [
           { "time": 0, "value": 0 },
-          { "time": 300, "value": -20, "easing": "easeOutQuad" },
-          { "time": 600, "value": 0, "easing": "easeInQuad" },
-          { "time": 900, "value": -10, "easing": "easeOutQuad" },
-          { "time": 1200, "value": 0, "easing": "easeInQuad" }
+          { "time": 200, "value": 0.6, "easing": "easeOutQuad" },
+          { "time": 2000, "value": 0.6 },
+          { "time": 2400, "value": 0, "easing": "easeInQuad" }
         ]
       }
     },
     {
-      "id": "coin-shine",
+      "id": "coin-far-1",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 60, "cy": 0, "radius": 14, "fill": { "color": "#B8860B" } },
+      "keyframes": {
+        "y": [ { "time": 0, "value": -40 }, { "time": 2400, "value": 450, "easing": "easeInQuad" } ],
+        "alpha": [ { "time": 0, "value": 0.3 }, { "time": 2000, "value": 0.3 }, { "time": 2400, "value": 0 } ],
+        "rotation": [ { "time": 0, "value": 0 }, { "time": 2400, "value": 8, "easing": "linear" } ],
+        "scaleX": [ { "time": 0, "value": 1 }, { "time": 600, "value": 0.1, "easing": "easeInOutSine" }, { "time": 1200, "value": 1, "easing": "easeInOutSine" }, { "time": 1800, "value": 0.1, "easing": "easeInOutSine" }, { "time": 2400, "value": 1, "easing": "easeInOutSine" } ]
+      }
+    },
+    {
+      "id": "coin-far-2",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 260, "cy": 0, "radius": 12, "fill": { "color": "#DAA520" } },
+      "keyframes": {
+        "y": [ { "time": 200, "value": -30 }, { "time": 2400, "value": 420, "easing": "easeInQuad" } ],
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 200, "value": 0.35 }, { "time": 2000, "value": 0.35 }, { "time": 2400, "value": 0 } ],
+        "rotation": [ { "time": 0, "value": 1 }, { "time": 2400, "value": -6, "easing": "linear" } ],
+        "scaleX": [ { "time": 200, "value": 0.1 }, { "time": 700, "value": 1, "easing": "easeInOutSine" }, { "time": 1200, "value": 0.1, "easing": "easeInOutSine" }, { "time": 1700, "value": 1, "easing": "easeInOutSine" } ]
+      }
+    },
+    {
+      "id": "coin-mid-1",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 100, "cy": 0, "radius": 20, "fill": { "color": "#FFD700" }, "stroke": { "width": 2, "color": "#DAA520" } },
+      "keyframes": {
+        "y": [ { "time": 100, "value": -50 }, { "time": 2200, "value": 430, "easing": "easeInCubic" } ],
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 100, "value": 0.6 }, { "time": 1800, "value": 0.6 }, { "time": 2200, "value": 0 } ],
+        "rotation": [ { "time": 0, "value": 0.5 }, { "time": 2200, "value": 7, "easing": "linear" } ],
+        "scaleX": [ { "time": 100, "value": 1 }, { "time": 500, "value": 0.1, "easing": "easeInOutSine" }, { "time": 900, "value": -1, "easing": "easeInOutSine" }, { "time": 1300, "value": -0.1, "easing": "easeInOutSine" }, { "time": 1700, "value": 1, "easing": "easeInOutSine" } ]
+      }
+    },
+    {
+      "id": "coin-mid-2",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 220, "cy": 0, "radius": 18, "fill": { "color": "#FFC107" }, "stroke": { "width": 2, "color": "#FF8F00" } },
+      "keyframes": {
+        "y": [ { "time": 300, "value": -60 }, { "time": 2300, "value": 440, "easing": "easeInCubic" } ],
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 300, "value": 0.55 }, { "time": 1900, "value": 0.55 }, { "time": 2300, "value": 0 } ],
+        "rotation": [ { "time": 0, "value": -0.3 }, { "time": 2300, "value": -5, "easing": "linear" } ],
+        "scaleX": [ { "time": 300, "value": -1 }, { "time": 800, "value": -0.1, "easing": "easeInOutSine" }, { "time": 1300, "value": 1, "easing": "easeInOutSine" }, { "time": 1800, "value": 0.1, "easing": "easeInOutSine" }, { "time": 2300, "value": -1, "easing": "easeInOutSine" } ]
+      }
+    },
+    {
+      "id": "coin-near-1",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 80, "cy": 0, "radius": 28, "fill": { "color": "#FFD700" }, "stroke": { "width": 3, "color": "#B8860B" } },
+      "keyframes": {
+        "y": [ { "time": 150, "value": -70 }, { "time": 2000, "value": 460, "easing": "easeInCubic" } ],
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 150, "value": 0.8 }, { "time": 1600, "value": 0.8 }, { "time": 2000, "value": 0 } ],
+        "scaleX": [ { "time": 150, "value": 1 }, { "time": 550, "value": 0.1, "easing": "easeInOutSine" }, { "time": 950, "value": -1, "easing": "easeInOutSine" }, { "time": 1350, "value": -0.1, "easing": "easeInOutSine" }, { "time": 1750, "value": 1, "easing": "easeInOutSine" } ]
+      }
+    },
+    {
+      "id": "coin-near-2",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 240, "cy": 0, "radius": 26, "fill": { "color": "#FFC107" }, "stroke": { "width": 3, "color": "#E65100" } },
+      "keyframes": {
+        "y": [ { "time": 250, "value": -50 }, { "time": 2100, "value": 450, "easing": "easeInCubic" } ],
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 250, "value": 0.75 }, { "time": 1700, "value": 0.75 }, { "time": 2100, "value": 0 } ],
+        "scaleX": [ { "time": 250, "value": -0.5 }, { "time": 650, "value": 1, "easing": "easeInOutSine" }, { "time": 1050, "value": 0.1, "easing": "easeInOutSine" }, { "time": 1450, "value": -1, "easing": "easeInOutSine" }, { "time": 1850, "value": 0.1, "easing": "easeInOutSine" } ]
+      }
+    },
+    {
+      "id": "coin-hero",
+      "type": "graphics",
+      "graphics": { "type": "circle", "cx": 160, "cy": 200, "radius": 48, "fill": { "color": "#FFD700" }, "stroke": { "width": 4, "color": "#B8860B" } },
+      "keyframes": {
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 400, "value": 0 }, { "time": 600, "value": 1, "easing": "easeOutCubic" }, { "time": 2000, "value": 1 }, { "time": 2400, "value": 0, "easing": "easeInQuad" } ],
+        "scale": [ { "time": 400, "value": 0.3 }, { "time": 700, "value": 1.1, "easing": "easeOutBack" }, { "time": 900, "value": 1.0, "easing": "easeInOutQuad" } ],
+        "y": [ { "time": 400, "value": -80 }, { "time": 700, "value": 0, "easing": "easeOutBounce" } ],
+        "scaleX": [ { "time": 700, "value": 1 }, { "time": 900, "value": 0.08, "easing": "easeInQuad" }, { "time": 1100, "value": -1, "easing": "easeOutQuad" }, { "time": 1300, "value": -0.08, "easing": "easeInQuad" }, { "time": 1500, "value": 1, "easing": "easeOutQuad" }, { "time": 1700, "value": 0.08, "easing": "easeInQuad" }, { "time": 1900, "value": -1, "easing": "easeOutQuad" }, { "time": 2000, "value": 1, "easing": "easeOutQuad" } ]
+      }
+    },
+    {
+      "id": "coin-hero-rim",
       "type": "graphics",
       "blendMode": "add",
-      "graphics": {
-        "type": "circle",
-        "cx": 54,
-        "cy": 46,
-        "radius": 12,
-        "fill": { "color": "#FFFFFF", "alpha": 0.5 }
-      },
+      "graphics": { "type": "circle", "cx": 160, "cy": 200, "radius": 40, "stroke": { "width": 2, "color": "#FFF8DC", "alpha": 0.4 } },
       "keyframes": {
-        "alpha": [
-          { "time": 0, "value": 0.5 },
-          { "time": 150, "value": 0, "easing": "easeInQuad" },
-          { "time": 300, "value": 0 },
-          { "time": 450, "value": 0 },
-          { "time": 600, "value": 0.5, "easing": "easeOutQuad" },
-          { "time": 750, "value": 0, "easing": "easeInQuad" },
-          { "time": 900, "value": 0 },
-          { "time": 1050, "value": 0 },
-          { "time": 1200, "value": 0.5, "easing": "easeOutQuad" }
-        ],
-        "scaleX": [
-          { "time": 0, "value": 1.0 },
-          { "time": 150, "value": 0.1, "easing": "easeInQuad" },
-          { "time": 600, "value": 1.0, "easing": "easeOutQuad" },
-          { "time": 750, "value": 0.1, "easing": "easeInQuad" },
-          { "time": 1200, "value": 1.0, "easing": "easeOutQuad" }
-        ]
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 600, "value": 0 }, { "time": 800, "value": 0.5, "easing": "easeOutQuad" }, { "time": 2000, "value": 0.5 }, { "time": 2400, "value": 0 } ],
+        "scaleX": [ { "time": 700, "value": 1 }, { "time": 900, "value": 0.08, "easing": "easeInQuad" }, { "time": 1100, "value": -1, "easing": "easeOutQuad" }, { "time": 1300, "value": -0.08, "easing": "easeInQuad" }, { "time": 1500, "value": 1, "easing": "easeOutQuad" }, { "time": 1700, "value": 0.08, "easing": "easeInQuad" }, { "time": 1900, "value": -1, "easing": "easeOutQuad" }, { "time": 2000, "value": 1, "easing": "easeOutQuad" } ]
+      }
+    },
+    {
+      "id": "coin-hero-shine",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "circle", "cx": 148, "cy": 188, "radius": 16, "fill": { "color": "#FFFFFF", "alpha": 0.6 } },
+      "keyframes": {
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 700, "value": 0 }, { "time": 800, "value": 0.7, "easing": "easeOutQuad" }, { "time": 900, "value": 0, "easing": "easeInQuad" }, { "time": 1500, "value": 0 }, { "time": 1600, "value": 0.7, "easing": "easeOutQuad" }, { "time": 1700, "value": 0 } ],
+        "scaleX": [ { "time": 700, "value": 1 }, { "time": 900, "value": 0.08, "easing": "easeInQuad" }, { "time": 1100, "value": -1, "easing": "easeOutQuad" }, { "time": 1300, "value": -0.08, "easing": "easeInQuad" }, { "time": 1500, "value": 1, "easing": "easeOutQuad" } ]
+      }
+    },
+    {
+      "id": "coin-hero-symbol",
+      "type": "text",
+      "text": "$",
+      "x": 160, "y": 200, "anchorX": 0.5, "anchorY": 0.5,
+      "style": { "fontFamily": "Arial", "fontWeight": "bold", "fontSize": 40, "fill": "#B8860B" },
+      "keyframes": {
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 700, "value": 0 }, { "time": 800, "value": 1, "easing": "easeOutQuad" }, { "time": 2000, "value": 1 }, { "time": 2400, "value": 0 } ],
+        "scaleX": [ { "time": 700, "value": 1 }, { "time": 900, "value": 0.08, "easing": "easeInQuad" }, { "time": 1100, "value": -1, "easing": "easeOutQuad" }, { "time": 1300, "value": -0.08, "easing": "easeInQuad" }, { "time": 1500, "value": 1, "easing": "easeOutQuad" }, { "time": 1700, "value": 0.08, "easing": "easeInQuad" }, { "time": 1900, "value": -1, "easing": "easeOutQuad" }, { "time": 2000, "value": 1, "easing": "easeOutQuad" } ]
+      }
+    },
+    {
+      "id": "glow-pool",
+      "type": "graphics",
+      "blendMode": "add",
+      "graphics": { "type": "ellipse", "cx": 160, "cy": 360, "rx": 100, "ry": 20, "fill": { "color": "#FFD700", "alpha": 0.2 } },
+      "keyframes": {
+        "alpha": [ { "time": 0, "value": 0 }, { "time": 400, "value": 0 }, { "time": 800, "value": 0.5, "easing": "easeOutQuad" }, { "time": 2000, "value": 0.5 }, { "time": 2400, "value": 0, "easing": "easeInQuad" } ],
+        "scaleX": [ { "time": 800, "value": 0.5 }, { "time": 1200, "value": 1.2, "easing": "easeInOutSine" }, { "time": 1600, "value": 0.8, "easing": "easeInOutSine" }, { "time": 2000, "value": 1.0, "easing": "easeInOutSine" } ]
       }
     }
   ],
   "particles": [
-    {
-      "id": "sparkle",
-      "startTime": 0,
-      "mode": "continuous",
-      "x": 64,
-      "y": 56,
-      "config": {
-        "count": 2,
-        "lifetime": 400,
-        "speed": { "min": 1, "max": 3 },
-        "size": { "min": 1, "max": 2 },
-        "color": "#FFD700",
-        "alpha": { "start": 0.8, "end": 0 },
-        "direction": { "min": 0, "max": 6.283 },
-        "gravity": 0,
-        "blendMode": "add"
-      }
-    }
+    { "id": "trail-sparks", "startTime": 100, "mode": "continuous", "x": 160, "y": 200, "config": { "count": 4, "lifetime": 600, "speed": { "min": 1, "max": 4 }, "size": { "min": 1, "max": 3 }, "color": "#FFD700", "alpha": { "start": 0.8, "end": 0 }, "direction": { "min": 0, "max": 6.283 }, "gravity": -0.5, "blendMode": "add" } },
+    { "id": "landing-burst", "startTime": 700, "mode": "burst", "x": 160, "y": 340, "config": { "count": 20, "lifetime": 500, "speed": { "min": 2, "max": 7 }, "size": { "min": 1, "max": 3 }, "color": "#FFC107", "alpha": { "start": 1, "end": 0 }, "direction": { "min": 4.0, "max": 5.5 }, "gravity": 1, "blendMode": "add" } }
   ],
   "states": [
-    { "id": "spin-1", "label": "Spin 1", "startTime": 0, "endTime": 600, "color": "#FFD700" },
-    { "id": "spin-2", "label": "Spin 2", "startTime": 600, "endTime": 1200, "color": "#DAA520" }
+    { "id": "cascade", "label": "Cascade", "startTime": 0, "endTime": 700, "color": "#FFD700" },
+    { "id": "hero-land", "label": "Hero Land", "startTime": 700, "endTime": 1000, "color": "#FFC107" },
+    { "id": "spin-show", "label": "Spin Show", "startTime": 1000, "endTime": 2000, "color": "#B8860B" },
+    { "id": "fade-out", "label": "Fade Out", "startTime": 2000, "endTime": 2400, "color": "#8B6914" }
   ],
   "params": {}
 }
