@@ -134,5 +134,11 @@
       }
     }
   ],
+  "states": [
+    { "id": "idle", "label": "Idle", "startTime": 0, "endTime": 400, "color": "#4a9eff" },
+    { "id": "land", "label": "Land", "startTime": 400, "endTime": 650, "color": "#ff9f43" },
+    { "id": "win", "label": "Win", "startTime": 650, "endTime": 1100, "color": "#ffd700" },
+    { "id": "dim", "label": "Dim", "startTime": 1100, "endTime": 1400, "color": "#888888" }
+  ],
   "params": {}
 }
