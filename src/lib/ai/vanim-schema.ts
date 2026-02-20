@@ -50,9 +50,9 @@ export const VANIM_JSON_SCHEMA = {
         required: ['id', 'type'],
         properties: {
           id: { type: 'string', description: 'Уникальный id ноды (kebab-case)' },
-          type: { enum: ['container', 'sprite', 'spritesheet_anim', 'graphics', 'text'] },
+          type: { enum: ['container', 'sprite', 'spritesheet_anim', 'graphics', 'text', 'mesh'] },
           children: { type: 'array', items: { type: 'string' }, description: 'ID дочерних нод (только для container)' },
-          asset: { type: 'string', description: 'ID ассета (для sprite/spritesheet_anim)' },
+          asset: { type: 'string', description: 'ID ассета (для sprite/spritesheet_anim/mesh)' },
           text: { type: 'string', description: 'Текст (для text нод). Поддерживает {{param}}' },
           x: { type: 'number' }, y: { type: 'number' },
           scaleX: { type: 'number' }, scaleY: { type: 'number' },
@@ -63,6 +63,24 @@ export const VANIM_JSON_SCHEMA = {
           blendMode: { enum: ['normal', 'add', 'multiply', 'screen'] },
           startTime: { type: 'number', description: 'Время появления ноды (мс от начала анимации)' },
           duration: { type: 'number', description: 'Длительность жизни ноды (мс)' },
+          vertices: {
+            type: 'array',
+            description: 'Массив вершин mesh (только для type=mesh). Каждая вершина: {x, y, u, v}',
+            items: {
+              type: 'object',
+              required: ['x', 'y', 'u', 'v'],
+              properties: {
+                x: { type: 'number' }, y: { type: 'number' },
+                u: { type: 'number', description: 'UV координата 0-1' },
+                v: { type: 'number', description: 'UV координата 0-1' },
+              },
+            },
+          },
+          indices: {
+            type: 'array',
+            items: { type: 'number' },
+            description: 'Индексы треугольников (тройки). Только для type=mesh.',
+          },
           graphics: {
             description: 'Графический примитив (только для type=graphics)',
             oneOf: [

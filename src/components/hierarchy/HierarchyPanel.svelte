@@ -2,7 +2,8 @@
   import { projectState } from '$lib/state/project.svelte';
   import { selectionState } from '$lib/state/selection.svelte';
   import { historyState } from '$lib/state/history.svelte';
-  import type { VanimNode, NodeType } from '$lib/types/vanim';
+  import type { VanimNode, NodeType, MeshNode } from '$lib/types/vanim';
+  import { generateGrid } from '$lib/preview/MeshUtils';
   import NodeItem from './NodeItem.svelte';
 
   let showAddMenu = $state(false);
@@ -66,6 +67,16 @@
           style: { fontSize: 24, fill: '#ffffff' },
         };
         break;
+      case 'mesh': {
+        const grid = generateGrid(4, 4, 128, 128);
+        node = {
+          id, type: 'mesh', asset: '',
+          x: 64, y: 64,
+          vertices: grid.vertices,
+          indices: grid.indices,
+        } as MeshNode;
+        break;
+      }
       default:
         return;
     }
@@ -132,6 +143,7 @@
             <button class="menu-item" onclick={() => addNode('spritesheet_anim')}>Spritesheet</button>
             <button class="menu-item" onclick={() => addNode('graphics')}>Graphics</button>
             <button class="menu-item" onclick={() => addNode('text')}>Text</button>
+            <button class="menu-item" onclick={() => addNode('mesh')}>Mesh</button>
             <div class="menu-divider"></div>
             <button class="menu-item" onclick={addParticle}>Particle System</button>
           </div>

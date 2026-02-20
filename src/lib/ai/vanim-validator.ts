@@ -94,8 +94,8 @@ export function validateVanim(data: unknown): ValidationError[] {
       }
     }
 
-    // asset (для sprite/spritesheet_anim)
-    if ((node.type === 'sprite' || node.type === 'spritesheet_anim') && typeof node.asset !== 'string') {
+    // asset (для sprite/spritesheet_anim/mesh)
+    if ((node.type === 'sprite' || node.type === 'spritesheet_anim' || node.type === 'mesh') && typeof node.asset !== 'string') {
       errors.push({ path: `${path}.asset`, message: `Нода типа ${node.type} должна иметь поле asset (id ассета из assets)`, severity: 'error' });
     }
 
@@ -116,6 +116,26 @@ export function validateVanim(data: unknown): ValidationError[] {
       }
     }
 
+    // mesh
+    if (node.type === 'mesh') {
+      if (!Array.isArray(node.vertices) || (node.vertices as unknown[]).length === 0) {
+        errors.push({ path: `${path}.vertices`, message: 'Нода типа mesh должна иметь непустой массив vertices [{x, y, u, v}]', severity: 'error' });
+      } else {
+        for (let vi = 0; vi < (node.vertices as unknown[]).length; vi++) {
+          const v = (node.vertices as unknown[])[vi] as Record<string, unknown>;
+          if (typeof v.x !== 'number' || typeof v.y !== 'number' || typeof v.u !== 'number' || typeof v.v !== 'number') {
+            errors.push({ path: `${path}.vertices[${vi}]`, message: 'Каждая вершина должна иметь числовые поля x, y, u, v', severity: 'error' });
+            break;
+          }
+        }
+      }
+      if (!Array.isArray(node.indices) || (node.indices as unknown[]).length === 0) {
+        errors.push({ path: `${path}.indices`, message: 'Нода типа mesh должна иметь непустой массив indices (тройки индексов треугольников)', severity: 'error' });
+      } else if ((node.indices as unknown[]).length % 3 !== 0) {
+        errors.push({ path: `${path}.indices`, message: 'indices должен содержать тройки индексов (длина кратна 3)', severity: 'warning' });
+      }
+    }
+
     // blendMode
     if (node.blendMode !== undefined && !VALID_BLEND_MODES.includes(node.blendMode as BlendMode)) {
       errors.push({ path: `${path}.blendMode`, message: `Неизвестный blendMode: "${node.blendMode}". Допустимые: ${VALID_BLEND_MODES.join(', ')}`, severity: 'error' });
@@ -125,8 +145,9 @@ export function validateVanim(data: unknown): ValidationError[] {
     if (node.keyframes && typeof node.keyframes === 'object') {
       const kfMap = node.keyframes as Record<string, unknown>;
       for (const [prop, kfs] of Object.entries(kfMap)) {
-        if (!VALID_KEYFRAME_PROPS.includes(prop)) {
-          errors.push({ path: `${path}.keyframes.${prop}`, message: `Неизвестное keyframe-свойство: "${prop}". Допустимые: ${VALID_KEYFRAME_PROPS.join(', ')}`, severity: 'warning' });
+        const isVertexProp = /^vertex\d+_(x|y)$/.test(prop);
+        if (!VALID_KEYFRAME_PROPS.includes(prop) && !isVertexProp) {
+          errors.push({ path: `${path}.keyframes.${prop}`, message: `Неизвестное keyframe-свойство: "${prop}". Допустимые: ${VALID_KEYFRAME_PROPS.join(', ')}, vertex0_x, vertex0_y, ...`, severity: 'warning' });
         }
         if (!Array.isArray(kfs)) {
           errors.push({ path: `${path}.keyframes.${prop}`, message: 'Значение должно быть массивом keyframes [{time, value, easing?}]', severity: 'error' });
@@ -159,7 +180,7 @@ export function validateVanim(data: unknown): ValidationError[] {
   const assetIds = new Set(doc.assets ? Object.keys(doc.assets as object) : []);
   for (let i = 0; i < (doc.nodes as unknown[]).length; i++) {
     const node = (doc.nodes as unknown[])[i] as Record<string, unknown>;
-    if ((node.type === 'sprite' || node.type === 'spritesheet_anim') && typeof node.asset === 'string') {
+    if ((node.type === 'sprite' || node.type === 'spritesheet_anim' || node.type === 'mesh') && typeof node.asset === 'string') {
       if (!assetIds.has(node.asset)) {
         errors.push({ path: `$.nodes[${i}].asset`, message: `Ассет "${node.asset}" не найден в assets. Добавьте его в assets: { "${node.asset}": { type: "texture", path: "..." } }`, severity: 'warning' });
       }

@@ -2,8 +2,10 @@
   import { projectState } from '$lib/state/project.svelte';
   import { selectionState } from '$lib/state/selection.svelte';
   import { historyState } from '$lib/state/history.svelte';
+  import type { MeshNode } from '$lib/types/vanim';
   import KeyframeEditor from './KeyframeEditor.svelte';
   import ParticleConfigurator from './ParticleConfigurator.svelte';
+  import MeshEditor from './MeshEditor.svelte';
 
   const selectedNode = $derived(
     selectionState.nodeId ? projectState.getNodeById(selectionState.nodeId) : undefined
@@ -107,6 +109,12 @@
               onchange={(e) => handleStringInput('text', e)}
             />
           </div>
+        </div>
+      {/if}
+
+      {#if selectedNode.type === 'mesh'}
+        <div class="section">
+          <MeshEditor node={selectedNode as MeshNode} />
         </div>
       {/if}
 
