@@ -5,6 +5,7 @@
   import { toastState } from '$lib/state/toast.svelte';
   import { openVanimFile, saveVanimFile, importVanimFromClipboard } from '$lib/io/save-load';
   import { exportVanimDownload, exportVanimToDirectory } from '$lib/io/export';
+  import AIPromptInput from './AIPromptInput.svelte';
 
   function handleNew() {
     if (projectState.dirty && !confirm('Несохранённые изменения будут потеряны. Продолжить?')) {
@@ -112,6 +113,12 @@
     <button class="tool-btn" onclick={handlePasteVanim} title="Вставить .vanim из буфера (Ctrl+V)">
       Paste .vanim
     </button>
+  </div>
+
+  <div class="toolbar-separator"></div>
+
+  <div class="toolbar-group">
+    <AIPromptInput />
   </div>
 
   <div class="project-info">
