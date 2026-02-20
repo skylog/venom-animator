@@ -4,16 +4,18 @@
   import { playbackState } from '$lib/state/playback.svelte';
   import { projectState } from '$lib/state/project.svelte';
   import { historyState } from '$lib/state/history.svelte';
+  import { timelineState } from '$lib/state/timeline.svelte';
 
   interface Props {
     nodeId: string;
     property: KeyframeProperty;
     keyframes: Keyframe[];
-    pxPerMs?: number;
-    offsetLeft?: number;
   }
 
-  let { nodeId, property, keyframes, pxPerMs = 0.5, offsetLeft = 120 }: Props = $props();
+  let { nodeId, property, keyframes }: Props = $props();
+
+  const pxPerMs = $derived(timelineState.pxPerMs);
+  const offsetLeft = timelineState.labelWidth;
 
   const isSelectedTrack = $derived(selectionState.keyframeProp === property);
 

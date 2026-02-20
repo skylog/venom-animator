@@ -2,13 +2,11 @@
   import { projectState } from '$lib/state/project.svelte';
   import { selectionState } from '$lib/state/selection.svelte';
   import { playbackState } from '$lib/state/playback.svelte';
+  import { timelineState } from '$lib/state/timeline.svelte';
   import type { KeyframeProperty, VanimNode } from '$lib/types/vanim';
   import PlaybackControls from './PlaybackControls.svelte';
   import TimeRuler from './TimeRuler.svelte';
   import Track from './Track.svelte';
-
-  const PX_PER_MS = 0.5;
-  const LABEL_WIDTH = 120;
 
   // Все ноды с keyframes
   const tracksData = $derived(() => {
@@ -30,7 +28,7 @@
   });
 
   // Playhead position
-  const playheadX = $derived(playbackState.currentTime * PX_PER_MS + LABEL_WIDTH);
+  const playheadX = $derived(playbackState.currentTime * timelineState.pxPerMs + timelineState.labelWidth);
 
   // Группируем треки по ноде
   const groupedTracks = $derived(() => {
@@ -42,6 +40,16 @@
     }
     return groups;
   });
+
+  function handleWheel(e: WheelEvent) {
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    if (e.deltaY < 0) {
+      timelineState.zoomIn();
+    } else {
+      timelineState.zoomOut();
+    }
+  }
 </script>
 
 <div class="timeline-panel">
@@ -49,8 +57,9 @@
     <PlaybackControls />
   </div>
 
-  <div class="timeline-content">
-    <TimeRuler pxPerMs={PX_PER_MS} offsetLeft={LABEL_WIDTH} />
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div class="timeline-content" onwheel={handleWheel}>
+    <TimeRuler />
 
     <div class="tracks-container">
       {#each [...groupedTracks().entries()] as [nodeId, tracks]}
@@ -69,8 +78,6 @@
               nodeId={track.nodeId}
               property={track.property}
               keyframes={track.keyframes}
-              pxPerMs={PX_PER_MS}
-              offsetLeft={LABEL_WIDTH}
             />
           {/each}
         </div>

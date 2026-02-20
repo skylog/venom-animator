@@ -1,12 +1,9 @@
 <script lang="ts">
   import { playbackState } from '$lib/state/playback.svelte';
+  import { timelineState } from '$lib/state/timeline.svelte';
 
-  interface Props {
-    pxPerMs?: number;
-    offsetLeft?: number;
-  }
-
-  let { pxPerMs = 0.5, offsetLeft = 120 }: Props = $props();
+  const pxPerMs = $derived(timelineState.pxPerMs);
+  const offsetLeft = timelineState.labelWidth;
 
   let rulerEl: HTMLDivElement;
 
